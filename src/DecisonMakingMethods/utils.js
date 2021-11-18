@@ -1,4 +1,4 @@
-const { min, max, random, floor, abs } = Math;
+const { min, max, random, abs } = Math;
 
 const transposeMatrix = (matrix) => {
     const transponsedMatrix = [];
@@ -106,7 +106,7 @@ export const handlePCriterionInvalidMatrix = (matrix) => {
 };
 
 export const handleGermeyerValidMatrix = (matrix, probabilities) => {
-    const worstRowProbability = findWorstRowProbability(matrix, probabilities);
+    const worstRowProbability = findMinRowProbability(matrix, probabilities);
     return worstRowProbability;
 };
 export const handleGermeyerInvalidMatrix = (matrix, probabilities) => {

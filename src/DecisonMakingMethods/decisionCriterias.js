@@ -13,14 +13,6 @@ import {
 } from "./utils.js";
 const { min, max } = Math;
 
-
-
-function calcBL(matrix, probabilities) {
-    const mathProbabilities = sumMathProbabilities(matrix, probabilities);
-    const decision = max(...mathProbabilities);
-    const answer = handleDecision(mathProbabilities, decision);
-    return answer;
-}
 function calcSavage(matrix) {
     const riskMatrix = buildRiskMatrix(matrix);
     const maxRisks = riskMatrix.map((row) => max(...row));
@@ -88,18 +80,9 @@ const matrix = [
 ];
 
 const initialProbabilities = [0.1, 0.3, 0.4, 0.2];
-const equalProbabilities = [0.25, 0.25, 0.25, 0.25];
 
-console.log("Wald :", calcWald(matrix));
-console.log("Optimistic :", calcOptimistic(matrix));
-console.log("Bayes-Laplace :", calcBL(matrix, initialProbabilities));
 console.log("Savage :", calcSavage(matrix));
 console.log("Hurwitz :", calcHurwitz(matrix));
 console.log("Hodges–Lehmann :", calcHL(matrix, initialProbabilities));
 console.log("P-criterion :", calcPCriterion(matrix));
 console.log("Germeyer :", calcGermeyer(matrix, initialProbabilities));
-
-console.log(
-    "Bayes-Laplace with equal probabilities :",
-    calcBL(matrix, equalProbabilities)
-);

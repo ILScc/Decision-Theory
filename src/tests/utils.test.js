@@ -4,12 +4,12 @@ import {
     getLambda,
     buildRiskMatrix,
     sumMathProbabilities,
-    handleDecision,
-    isOnlyPositiveMatrix,
-    handlePCriterionValidMatrix,
-    handlePCriterionInvalidMatrix,
-    handleGermeyerValidMatrix,
-    handleGermeyerInvalidMatrix,
+    // handleDecision,
+    // isOnlyPositiveMatrix,
+    // handlePCriterionValidMatrix,
+    // handlePCriterionInvalidMatrix,
+    // handleGermeyerValidMatrix,
+    // handleGermeyerInvalidMatrix,
 } from "../DecisonMakingMethods/utils";
 describe("test utils", () => {
     describe("should work with only positive matrix", () => {
