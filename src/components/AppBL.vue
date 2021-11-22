@@ -35,12 +35,16 @@ export default {
         [73, 54, 67, 60],
         [76, 69, 67, 59],
     ],
-    SAMPLE_PROBABILITIES: [0.1, 0.3, 0.4, 0.2],
+    SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
     methods: {
         calcBL(matrix, probabilities) {
+            console.log(this.$options.SAMPLE_PROBABILITIES);
+            const convertedProbabilities = probabilities
+                .split(",")
+                .map((prob) => +prob);
             const mathProbabilities = sumMathProbabilities(
                 matrix,
-                probabilities
+                convertedProbabilities
             );
             const decision = Math.max(...mathProbabilities);
             const answer = handleDecision(mathProbabilities, decision);
