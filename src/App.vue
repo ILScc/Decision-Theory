@@ -4,6 +4,7 @@
     <app-optimistic />
     <app-BL />
     <app-hurwitz />
+    <app-savage />
   </body>
 </template>
 
@@ -12,6 +13,7 @@ import AppWald from "./components/AppWald.vue";
 import AppOptimistic from "./components/AppOptimistic.vue";
 import AppBL from "./components/AppBL.vue";
 import AppHurwitz from "./components/AppHurwitz.vue";
+import AppSavage from "./components/AppSavage.vue";
 export default {
   name: "App",
   components: {
@@ -19,6 +21,7 @@ export default {
     AppOptimistic,
     AppBL,
     AppHurwitz,
+    AppSavage,
   },
 };
 </script>

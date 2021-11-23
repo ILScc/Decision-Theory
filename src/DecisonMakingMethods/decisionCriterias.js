@@ -1,5 +1,4 @@
 import {
-  buildRiskMatrix,
   findMinInRows,
   sumMathProbabilities,
   handleDecision,
@@ -10,15 +9,7 @@ import {
   handleGermeyerValidMatrix,
   handleGermeyerInvalidMatrix,
 } from "./utils.js";
-const { min, max } = Math;
-
-function calcSavage(matrix) {
-  const riskMatrix = buildRiskMatrix(matrix);
-  const maxRisks = riskMatrix.map((row) => max(...row));
-  const decision = min(...maxRisks);
-  const answer = handleDecision(maxRisks, decision);
-  return answer;
-}
+const { max } = Math;
 
 function calcHL(matrix, probabilities, lambda = getLambda()) {
   const lambdaMathProbabilities = sumMathProbabilities(
@@ -66,7 +57,6 @@ const matrix = [
 
 const initialProbabilities = [0.1, 0.3, 0.4, 0.2];
 
-console.log("Savage :", calcSavage(matrix));
 console.log("Hodges–Lehmann :", calcHL(matrix, initialProbabilities));
 console.log("P-criterion :", calcPCriterion(matrix));
 console.log("Germeyer :", calcGermeyer(matrix, initialProbabilities));
