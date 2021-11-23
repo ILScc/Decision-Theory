@@ -12,7 +12,7 @@ import {
   isOnlyPositiveMatrix,
   handlePCriterionValidMatrix,
   handlePCriterionInvalidMatrix,
-  handleDecision,
+  prettifyOutput,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -36,7 +36,7 @@ export default {
         ? handlePCriterionValidMatrix(matrix)
         : handlePCriterionInvalidMatrix(matrix);
       const decision = Math.max(...rowMultiplications);
-      const answer = handleDecision(rowMultiplications, decision);
+      const answer = prettifyOutput(rowMultiplications, decision);
       this.result = answer;
     },
   },

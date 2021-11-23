@@ -9,7 +9,7 @@
 <script>
 import {
   findMinInRows,
-  handleDecision,
+  prettifyOutput,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -29,7 +29,7 @@ export default {
     calcWald(matrix) {
       const minInRows = findMinInRows(matrix);
       const decision = Math.max(...minInRows);
-      const answer = handleDecision(minInRows, decision);
+      const answer = prettifyOutput(minInRows, decision);
       this.result = answer;
     },
   },

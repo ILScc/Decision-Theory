@@ -13,7 +13,7 @@ import {
   getLambda,
   findMinInRows,
   findMaxInRows,
-  handleDecision,
+  prettifyOutput,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -42,7 +42,7 @@ export default {
         (value, i) => value + lambdaMinInRows[i]
       );
       const decision = Math.max(...options);
-      const answer = handleDecision(options, decision);
+      const answer = prettifyOutput(options, decision);
       this.result = answer;
     },
   },

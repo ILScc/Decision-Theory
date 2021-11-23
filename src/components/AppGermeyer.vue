@@ -13,7 +13,8 @@ import {
   isOnlyPositiveMatrix,
   handleGermeyerValidMatrix,
   handleGermeyerInvalidMatrix,
-  handleDecision,
+  prettifyOutput,
+  convertProbabilities,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -33,13 +34,13 @@ export default {
   SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
   methods: {
     calcGermeyer(matrix, probabilities) {
-      const convertedProbabilities = probabilities.split(",").map((p) => +p);
+      const convertedProbabilities = convertProbabilities(probabilities);
       const isMatrixValid = !isOnlyPositiveMatrix(matrix);
       const minValueMathProbs = isMatrixValid
         ? handleGermeyerValidMatrix(matrix, convertedProbabilities)
         : handleGermeyerInvalidMatrix(matrix, convertedProbabilities);
       const decision = Math.max(...minValueMathProbs);
-      const answer = handleDecision(minValueMathProbs, decision);
+      const answer = prettifyOutput(minValueMathProbs, decision);
       this.result = answer;
     },
   },

@@ -4,7 +4,7 @@ import {
   getLambda,
   buildRiskMatrix,
   sumMathProbabilities,
-  // handleDecision,
+  // prettifyOutput,
   // isOnlyPositiveMatrix,
   // handlePCriterionValidMatrix,
   // handlePCriterionInvalidMatrix,

@@ -18,7 +18,8 @@
 <script>
 import {
   sumMathProbabilities,
-  handleDecision,
+  prettifyOutput,
+  convertProbabilities
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -38,15 +39,13 @@ export default {
   SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
   methods: {
     calcBL(matrix, probabilities) {
-      const convertedProbabilities = probabilities
-        .split(",")
-        .map((prob) => +prob);
+      const convertedProbabilities = convertProbabilities(probabilities);
       const mathProbabilities = sumMathProbabilities(
         matrix,
         convertedProbabilities
       );
       const decision = Math.max(...mathProbabilities);
-      const answer = handleDecision(mathProbabilities, decision);
+      const answer = prettifyOutput(mathProbabilities, decision);
       this.result = answer;
     },
   },

@@ -22,7 +22,8 @@ import {
   getLambda,
   findMinInRows,
   sumMathProbabilities,
-  handleDecision,
+  prettifyOutput,
+  convertProbabilities
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -43,7 +44,7 @@ export default {
   SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
   methods: {
     calcHL(matrix, probabilities, lambda = this.lambda) {
-      const convertedProbabilities = probabilities.split(",").map((p) => +p);
+      const convertedProbabilities = convertProbabilities(probabilities);
       const lambdaMathProbabilities = sumMathProbabilities(
         matrix,
         convertedProbabilities
@@ -55,7 +56,7 @@ export default {
         (value, i) => value + lambdaMinInRows[i]
       );
       const decision = Math.max(...options);
-      const answer = handleDecision(options, decision);
+      const answer = prettifyOutput(options, decision);
       this.result = answer;
     },
   },

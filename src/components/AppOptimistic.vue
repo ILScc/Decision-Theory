@@ -9,7 +9,7 @@
 <script>
 import {
   findMaxInRows,
-  handleDecision,
+  prettifyOutput,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -29,7 +29,7 @@ export default {
     calcOptimistic(matrix) {
       const maxInRows = findMaxInRows(matrix);
       const decision = Math.max(...maxInRows);
-      const answer = handleDecision(maxInRows, decision);
+      const answer = prettifyOutput(maxInRows, decision);
       this.result = answer;
     },
   },

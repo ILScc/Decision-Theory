@@ -9,7 +9,7 @@
 <script>
 import {
   buildRiskMatrix,
-  handleDecision,
+  prettifyOutput,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
@@ -30,7 +30,7 @@ export default {
       const riskMatrix = buildRiskMatrix(matrix);
       const maxRisks = riskMatrix.map((row) => Math.max(...row));
       const decision = Math.min(...maxRisks);
-      const answer = handleDecision(maxRisks, decision);
+      const answer = prettifyOutput(maxRisks, decision);
       this.result = answer;
     },
   },

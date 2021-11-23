@@ -44,6 +44,9 @@ export const getLambda = () => {
   return Number.parseFloat(((random() * 11) % 1).toFixed(1));
 };
 
+export const convertProbabilities = (probabilities) =>
+  probabilities.split(",").map((p) => Number(p));
+
 export const buildRiskMatrix = (matrix) => {
   const maxInCols = calcMaxInColumns(matrix);
   const riskMatrix = JSON.parse(JSON.stringify(matrix));
@@ -72,7 +75,7 @@ export const sumMathProbabilities = (matrix, probabilities) =>
     return formattedResult;
   });
 
-export const handleDecision = (options, decision) => {
+export const prettifyOutput = (options, decision) => {
   const decisionNum = options.findIndex((option) => option === decision);
   const formattedDecision = decision % 1 === 0 ? decision : decision.toFixed(1);
   const answer = `Decision ${decisionNum + 1} with value ${formattedDecision}`;
