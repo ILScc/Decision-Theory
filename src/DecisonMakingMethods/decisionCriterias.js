@@ -1,8 +1,5 @@
 import {
-  findMinInRows,
-  sumMathProbabilities,
   handleDecision,
-  getLambda,
   isOnlyPositiveMatrix,
   handlePCriterionValidMatrix,
   handlePCriterionInvalidMatrix,
@@ -11,21 +8,7 @@ import {
 } from "./utils.js";
 const { max } = Math;
 
-function calcHL(matrix, probabilities, lambda = getLambda()) {
-  const lambdaMathProbabilities = sumMathProbabilities(
-    matrix,
-    probabilities
-  ).map((value) => lambda * value);
-  const lambdaMinInRows = findMinInRows(matrix).map(
-    (value) => (1 - lambda.toFixed(1)) * value
-  );
-  const options = lambdaMathProbabilities.map(
-    (value, i) => value + lambdaMinInRows[i]
-  );
-  const decision = max(...options);
-  const answer = handleDecision(options, decision);
-  return `${answer}, lambda = ${lambda}`;
-}
+
 function calcPCriterion(matrix) {
   const isMatrixValid = isOnlyPositiveMatrix(matrix);
   const rowMultiplications = isMatrixValid
@@ -57,6 +40,5 @@ const matrix = [
 
 const initialProbabilities = [0.1, 0.3, 0.4, 0.2];
 
-console.log("Hodges–Lehmann :", calcHL(matrix, initialProbabilities));
 console.log("P-criterion :", calcPCriterion(matrix));
 console.log("Germeyer :", calcGermeyer(matrix, initialProbabilities));
