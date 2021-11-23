@@ -1,7 +1,6 @@
 import {
   buildRiskMatrix,
   findMinInRows,
-  findMaxInRows,
   sumMathProbabilities,
   handleDecision,
   getLambda,
@@ -19,16 +18,6 @@ function calcSavage(matrix) {
   const decision = min(...maxRisks);
   const answer = handleDecision(maxRisks, decision);
   return answer;
-}
-function calcHurwitz(matrix, lambda = getLambda()) {
-  const lambdaMinInRows = findMinInRows(matrix).map((value) => value * lambda);
-  const lambdaMaxInRows = findMaxInRows(matrix).map(
-    (value) => (1 - lambda).toFixed(1) * value
-  );
-  const options = lambdaMaxInRows.map((value, i) => value + lambdaMinInRows[i]);
-  const decision = max(...options);
-  const answer = handleDecision(options, decision);
-  return `${answer}, lambda = ${lambda}`;
 }
 
 function calcHL(matrix, probabilities, lambda = getLambda()) {
@@ -78,7 +67,6 @@ const matrix = [
 const initialProbabilities = [0.1, 0.3, 0.4, 0.2];
 
 console.log("Savage :", calcSavage(matrix));
-console.log("Hurwitz :", calcHurwitz(matrix));
 console.log("Hodges–Lehmann :", calcHL(matrix, initialProbabilities));
 console.log("P-criterion :", calcPCriterion(matrix));
 console.log("Germeyer :", calcGermeyer(matrix, initialProbabilities));

@@ -38,7 +38,6 @@ export default {
   SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
   methods: {
     calcBL(matrix, probabilities) {
-      console.log(this.$options.SAMPLE_PROBABILITIES);
       const convertedProbabilities = probabilities
         .split(",")
         .map((prob) => +prob);
