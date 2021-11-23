@@ -7,6 +7,7 @@
     <app-savage />
     <app-HL />
     <app-p-critreria />
+    <app-germeyer />
   </body>
 </template>
 
@@ -18,6 +19,7 @@ import AppHurwitz from "./components/AppHurwitz.vue";
 import AppSavage from "./components/AppSavage.vue";
 import AppHL from "./components/AppHL.vue";
 import AppPCritreria from "./components/AppPCritreria.vue";
+import AppGermeyer from "./components/AppGermeyer.vue";
 export default {
   name: "App",
   components: {
@@ -28,6 +30,7 @@ export default {
     AppSavage,
     AppHL,
     AppPCritreria,
+    AppGermeyer,
   },
 };
 </script>
