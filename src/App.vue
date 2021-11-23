@@ -6,6 +6,7 @@
     <app-hurwitz />
     <app-savage />
     <app-HL />
+    <app-p-critreria />
   </body>
 </template>
 
@@ -16,6 +17,7 @@ import AppBL from "./components/AppBL.vue";
 import AppHurwitz from "./components/AppHurwitz.vue";
 import AppSavage from "./components/AppSavage.vue";
 import AppHL from "./components/AppHL.vue";
+import AppPCritreria from "./components/AppPCritreria.vue";
 export default {
   name: "App",
   components: {
@@ -25,6 +27,7 @@ export default {
     AppHurwitz,
     AppSavage,
     AppHL,
+    AppPCritreria,
   },
 };
 </script>

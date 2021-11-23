@@ -1,23 +1,10 @@
 import {
   handleDecision,
   isOnlyPositiveMatrix,
-  handlePCriterionValidMatrix,
-  handlePCriterionInvalidMatrix,
   handleGermeyerValidMatrix,
   handleGermeyerInvalidMatrix,
 } from "./utils.js";
 const { max } = Math;
-
-
-function calcPCriterion(matrix) {
-  const isMatrixValid = isOnlyPositiveMatrix(matrix);
-  const rowMultiplications = isMatrixValid
-    ? handlePCriterionValidMatrix(matrix)
-    : handlePCriterionInvalidMatrix(matrix);
-  const decision = max(...rowMultiplications);
-  const answer = handleDecision(rowMultiplications, decision);
-  return answer;
-}
 
 function calcGermeyer(matrix, probabilities) {
   const isMatrixValid = !isOnlyPositiveMatrix(matrix);
@@ -40,5 +27,4 @@ const matrix = [
 
 const initialProbabilities = [0.1, 0.3, 0.4, 0.2];
 
-console.log("P-criterion :", calcPCriterion(matrix));
 console.log("Germeyer :", calcGermeyer(matrix, initialProbabilities));
