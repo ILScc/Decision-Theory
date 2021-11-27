@@ -1,11 +1,11 @@
 const { min, max, random, abs } = Math;
 
-const transposeMatrix = (matrix) => {
-  const transponsedMatrix = [];
+const transposeMatrix = (matrix: number[][]) => {
+  const transponsedMatrix: number[][] = [];
   const totalCols = matrix[0].length;
   let colNum = 0;
   while (colNum < totalCols) {
-    const column = [];
+    const column: number[] = [];
     matrix.forEach((row) => {
       column.push(row[colNum]);
     });
@@ -15,16 +15,16 @@ const transposeMatrix = (matrix) => {
   return transponsedMatrix;
 };
 
-const calcMaxInColumns = (matrix) => {
+const calcMaxInColumns = (matrix: number[][]) => {
   const transponsedMatrix = transposeMatrix(matrix);
   const maxInColumns = transponsedMatrix.map((column) => max(...column));
   return maxInColumns;
 };
 
-const multiplyRowsValues = (matrix) =>
+const multiplyRowsValues = (matrix: number[][]) =>
   matrix.map((row) => row.reduce((value, nexValue) => value * nexValue));
 
-const getOnlyNegativeMatrix = (matrix) => {
+const getOnlyNegativeMatrix = (matrix: number[][]) => {
   const maxMatrixValue = max(...findMaxInRows(matrix));
   const onlyNegativeMatrix = matrix.map((row) =>
     row.map((value) => (value <= 0 ? value : value - (maxMatrixValue + 1)))
@@ -32,7 +32,7 @@ const getOnlyNegativeMatrix = (matrix) => {
   return onlyNegativeMatrix;
 };
 
-const findMinRowProbability = (matrix, probabilities) => {
+const findMinRowProbability = (matrix: number[][], probabilities: number[]) => {
   const matrixOfMathProbs = matrix.map((row) =>
     row.map((value, i) => value * probabilities[i])
   );
@@ -44,10 +44,10 @@ export const getLambda = () => {
   return Number.parseFloat(((random() * 11) % 1).toFixed(1));
 };
 
-export const convertProbabilities = (probabilities) =>
+export const convertProbabilities = (probabilities: string) =>
   probabilities.split(",").map((p) => Number(p));
 
-export const buildRiskMatrix = (matrix) => {
+export const buildRiskMatrix = (matrix: number[][]) => {
   const maxInCols = calcMaxInColumns(matrix);
   const riskMatrix = JSON.parse(JSON.stringify(matrix));
   const totalColumns = matrix[0].length;
@@ -63,9 +63,14 @@ export const buildRiskMatrix = (matrix) => {
   return riskMatrix;
 };
 
-export const findMinInRows = (matrix) => matrix.map((row) => min(...row));
-export const findMaxInRows = (matrix) => matrix.map((row) => max(...row));
-export const sumMathProbabilities = (matrix, probabilities) =>
+export const findMinInRows = (matrix: number[][]) =>
+  matrix.map((row) => min(...row));
+export const findMaxInRows = (matrix: number[][]) =>
+  matrix.map((row) => max(...row));
+export const sumMathProbabilities = (
+  matrix: number[][],
+  probabilities: number[]
+) =>
   matrix.map((row) => {
     let result = 0;
     row.forEach((revenue, i) => {
@@ -75,14 +80,14 @@ export const sumMathProbabilities = (matrix, probabilities) =>
     return formattedResult;
   });
 
-export const prettifyOutput = (options, decision) => {
+export const prettifyOutput = (options: number[], decision: number) => {
   const decisionNum = options.findIndex((option) => option === decision);
   const formattedDecision = decision % 1 === 0 ? decision : decision.toFixed(1);
   const answer = `Decision ${decisionNum + 1} with value ${formattedDecision}`;
   return answer;
 };
 
-const getOnlyPositiveMatrix = (matrix) => {
+const getOnlyPositiveMatrix = (matrix: number[][]) => {
   const minMatrixValue = min(...findMinInRows(matrix));
   const onlyPositiveMatrix = matrix.map((row) =>
     row.map((value) => (value >= 0 ? value : value + abs(minMatrixValue) + 1))
@@ -90,24 +95,30 @@ const getOnlyPositiveMatrix = (matrix) => {
   return onlyPositiveMatrix;
 };
 
-export const isOnlyPositiveMatrix = (matrix) =>
+export const isOnlyPositiveMatrix = (matrix: number[][]) =>
   matrix.every((row) => row.every((value) => value >= 0));
 
-export const handlePCriterionValidMatrix = (matrix) => {
+export const handlePCriterionValidMatrix = (matrix: number[][]) => {
   const rowMultiplications = multiplyRowsValues(matrix);
   return rowMultiplications;
 };
-export const handlePCriterionInvalidMatrix = (matrix) => {
+export const handlePCriterionInvalidMatrix = (matrix: number[][]) => {
   const onlyPositiveMatrix = getOnlyPositiveMatrix(matrix);
   const rowMultiplications = multiplyRowsValues(onlyPositiveMatrix);
   return rowMultiplications;
 };
 
-export const handleGermeyerValidMatrix = (matrix, probabilities) => {
+export const handleGermeyerValidMatrix = (
+  matrix: number[][],
+  probabilities: number[]
+) => {
   const worstRowProbability = findMinRowProbability(matrix, probabilities);
   return worstRowProbability;
 };
-export const handleGermeyerInvalidMatrix = (matrix, probabilities) => {
+export const handleGermeyerInvalidMatrix = (
+  matrix: number[][],
+  probabilities: number[]
+) => {
   const onlyNegativeMatrix = getOnlyNegativeMatrix(matrix);
   const minRowProbability = findMinRowProbability(
     onlyNegativeMatrix,
