@@ -8,7 +8,9 @@
   <table>
     <tbody>
       <tr v-for="row in rows" :key="row">
-        <td><input type="number" /></td>
+        <td v-for="col in columns" :key="col">
+          <input type="number" />
+        </td>
       </tr>
     </tbody>
   </table>

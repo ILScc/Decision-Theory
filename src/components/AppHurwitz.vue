@@ -1,13 +1,4 @@
-<template>
-  <form action="">
-    <label for="Hurwitz">Calc Hurwitz</label>
-    <input type="text" name="Hurwitz" id="Hurwitz" v-model="matrix" />
-    <label for="Lambda">Insert lambda (should be in range [0, 1])</label>
-    <input type="text" name="lambda" id="lambda" v-model="lambda" />
-    <button type="button" @click="calcHurwitz(matrix)">Calculate</button>
-    <div>Result : {{ result }}</div>
-  </form>
-</template>
+<template>place</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -20,20 +11,13 @@ import {
 export default defineComponent({
   data() {
     return {
-      matrix: this.$options.SAMPLE_MATRIX,
+      matrix: "",
       lambda: getLambda(),
-      result: null,
+      result: "",
     };
   },
-  SAMPLE_MATRIX: [
-    [54, 65, 50, 68],
-    [67, 74, 55, 72],
-    [51, 67, 78, 68],
-    [73, 54, 67, 60],
-    [76, 69, 67, 59],
-  ],
   methods: {
-    calcHurwitz(matrix, lambda = this.lambda) {
+    calcHurwitz(matrix, lambda = 0.5) {
       const lambdaMinInRows = findMinInRows(matrix).map(
         (value) => value * lambda
       );

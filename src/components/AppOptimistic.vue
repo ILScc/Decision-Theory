@@ -1,22 +1,14 @@
-<template>
-  <form action="">
-    <label for="Wald">Calc Optimistic Criteria</label>
-    <input type="text" name="Optimistic" id="Optimistic" v-model="matrix" />
-    <button type="button" @click="calcOptimistic(matrix)">Calculate</button>
-    <div>Result : {{ result }}</div>
-  </form>
-</template>
+<template>Place</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
 import { findMaxInRows, prettifyOutput } from "../DecisonMakingMethods/utils";
-import { CriteriaData } from "../types";
 export default defineComponent({
   data() {
     return {
-      matrix: this.$options.SAMPLE_MATRIX,
-      result: null,
-    } as CriteriaData;
+      matrix: "",
+      result: "",
+    };
   },
 
   SAMPLE_MATRIX: [

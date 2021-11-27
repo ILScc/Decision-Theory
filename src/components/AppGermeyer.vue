@@ -1,13 +1,4 @@
-<template>
-  <form action="">
-    <label for="Germeyer">Calc Germeyer criteria (P-criteria)</label>
-    <input type="text" name="Germeyer" id="Germeyer" v-model="matrix" />
-    <button type="button" @click="calcGermeyer(matrix, probabilities)">
-      Calculate
-    </button>
-    <div>Result : {{ result }}</div>
-  </form>
-</template>
+<template>place</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -21,19 +12,11 @@ import {
 export default defineComponent({
   data() {
     return {
-      matrix: this.$options.SAMPLE_MATRIX,
-      probabilities: this.$options.SAMPLE_PROBABILITIES,
-      result: null,
+      matrix: "",
+      probabilities: "",
+      result: "",
     };
   },
-  SAMPLE_MATRIX: [
-    [54, 65, 50, 68],
-    [67, 74, 55, 72],
-    [51, 67, 78, 68],
-    [73, 54, 67, 60],
-    [76, 69, 67, 59],
-  ],
-  SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
   methods: {
     calcGermeyer(matrix, probabilities) {
       const convertedProbabilities = convertProbabilities(probabilities);
