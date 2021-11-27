@@ -1,36 +1,36 @@
 <template>
-  <body>
-    <app-wald />
-    <app-optimistic />
-    <app-BL />
-    <app-hurwitz />
-    <app-savage />
-    <app-HL />
-    <app-p-critreria />
-    <app-germeyer />
-  </body>
+  <app-BL />
+  <app-germeyer />
+  <app-HL />
+  <app-hurwitz />
+  <app-optimistic />
+  <app-p-critreria />
+  <app-savage />
+  <app-wald />
 </template>
 
-<script>
-import AppWald from "./components/AppWald.vue";
-import AppOptimistic from "./components/AppOptimistic.vue";
+<script lang="ts">
+import { defineComponent } from "vue";
 import AppBL from "./components/AppBL.vue";
-import AppHurwitz from "./components/AppHurwitz.vue";
-import AppSavage from "./components/AppSavage.vue";
-import AppHL from "./components/AppHL.vue";
-import AppPCritreria from "./components/AppPCritreria.vue";
 import AppGermeyer from "./components/AppGermeyer.vue";
-export default {
+import AppHL from "./components/AppHL.vue";
+import AppHurwitz from "./components/AppHurwitz.vue";
+import AppOptimistic from "./components/AppOptimistic.vue";
+import AppPCritreria from "./components/AppPCritreria.vue";
+import AppSavage from "./components/AppSavage.vue";
+import AppWald from "./components/AppWald.vue";
+
+export default defineComponent({
   name: "App",
   components: {
-    AppWald,
-    AppOptimistic,
     AppBL,
-    AppHurwitz,
-    AppSavage,
-    AppHL,
-    AppPCritreria,
     AppGermeyer,
+    AppHL,
+    AppHurwitz,
+    AppOptimistic,
+    AppPCritreria,
+    AppSavage,
+    AppWald,
   },
-};
+});
 </script>

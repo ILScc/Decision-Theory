@@ -15,11 +15,11 @@
     <div>Result : {{ result }}</div>
   </form>
 </template>
-<script>
+<script lang="ts">
 import {
   sumMathProbabilities,
   prettifyOutput,
-  convertProbabilities
+  convertProbabilities,
 } from "../DecisonMakingMethods/utils.js";
 export default {
   data() {
