@@ -18,6 +18,8 @@
   </form>
 </template>
 <script lang="ts">
+import { defineComponent } from "vue";
+
 import {
   getLambda,
   findMinInRows,
@@ -25,7 +27,7 @@ import {
   prettifyOutput,
   convertProbabilities,
 } from "../DecisonMakingMethods/utils";
-export default {
+export default defineComponent({
   data() {
     return {
       matrix: this.$options.SAMPLE_MATRIX,
@@ -56,9 +58,8 @@ export default {
         (value, i) => value + lambdaMinInRows[i]
       );
       const decision = Math.max(...options);
-      const answer = prettifyOutput(options, decision);
-      this.result = answer;
+      this.result = prettifyOutput(options, decision);
     },
   },
-};
+});
 </script>

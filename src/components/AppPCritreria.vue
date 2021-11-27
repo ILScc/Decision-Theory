@@ -7,6 +7,8 @@
   </form>
 </template>
 <script lang="ts">
+import { defineComponent } from "vue";
+
 import {
   getLambda,
   isOnlyPositiveMatrix,
@@ -14,7 +16,7 @@ import {
   handlePCriterionInvalidMatrix,
   prettifyOutput,
 } from "../DecisonMakingMethods/utils";
-export default {
+export default defineComponent({
   data() {
     return {
       matrix: this.$options.SAMPLE_MATRIX,
@@ -36,9 +38,8 @@ export default {
         ? handlePCriterionValidMatrix(matrix)
         : handlePCriterionInvalidMatrix(matrix);
       const decision = Math.max(...rowMultiplications);
-      const answer = prettifyOutput(rowMultiplications, decision);
-      this.result = answer;
+      this.result = prettifyOutput(rowMultiplications, decision);
     },
   },
-};
+});
 </script>

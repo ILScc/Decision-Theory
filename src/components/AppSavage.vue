@@ -7,16 +7,16 @@
   </form>
 </template>
 <script lang="ts">
-import {
-  buildRiskMatrix,
-  prettifyOutput,
-} from "../DecisonMakingMethods/utils";
-export default {
+import { defineComponent } from "vue";
+
+import { buildRiskMatrix, prettifyOutput } from "../DecisonMakingMethods/utils";
+import { CriteriaData } from "../types";
+export default defineComponent({
   data() {
     return {
       matrix: this.$options.SAMPLE_MATRIX,
       result: null,
-    };
+    } as CriteriaData;
   },
   SAMPLE_MATRIX: [
     [54, 65, 50, 68],
@@ -30,9 +30,8 @@ export default {
       const riskMatrix = buildRiskMatrix(matrix);
       const maxRisks = riskMatrix.map((row) => Math.max(...row));
       const decision = Math.min(...maxRisks);
-      const answer = prettifyOutput(maxRisks, decision);
-      this.result = answer;
+      this.result = prettifyOutput(maxRisks, decision);
     },
   },
-};
+});
 </script>

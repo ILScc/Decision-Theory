@@ -9,6 +9,8 @@
   </form>
 </template>
 <script lang="ts">
+import { defineComponent } from "vue";
+
 import {
   isOnlyPositiveMatrix,
   handleGermeyerValidMatrix,
@@ -16,7 +18,7 @@ import {
   prettifyOutput,
   convertProbabilities,
 } from "../DecisonMakingMethods/utils";
-export default {
+export default defineComponent({
   data() {
     return {
       matrix: this.$options.SAMPLE_MATRIX,
@@ -40,9 +42,8 @@ export default {
         ? handleGermeyerValidMatrix(matrix, convertedProbabilities)
         : handleGermeyerInvalidMatrix(matrix, convertedProbabilities);
       const decision = Math.max(...minValueMathProbs);
-      const answer = prettifyOutput(minValueMathProbs, decision);
-      this.result = answer;
+      this.result = prettifyOutput(minValueMathProbs, decision);
     },
   },
-};
+});
 </script>

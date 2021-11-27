@@ -16,18 +16,31 @@
   </form>
 </template>
 <script lang="ts">
+import { defineComponent } from "vue";
+
 import {
   sumMathProbabilities,
   prettifyOutput,
   convertProbabilities,
 } from "../DecisonMakingMethods/utils";
-export default {
+import { CriteriaData } from "../types";
+export default defineComponent({
+  props: {
+    rows: {
+      type: Number,
+      required: true,
+    },
+    columns: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       matrix: this.$options.SAMPLE_MATRIX,
       probabilities: this.$options.SAMPLE_PROBABILITIES,
       result: null,
-    };
+    } as CriteriaData;
   },
   SAMPLE_MATRIX: [
     [54, 65, 50, 68],
@@ -38,16 +51,18 @@ export default {
   ],
   SAMPLE_PROBABILITIES: "0.1, 0.3, 0.4, 0.2",
   methods: {
-    calcBL(matrix, probabilities) {
+    calcBL(matrix, probabilities): void {
       const convertedProbabilities = convertProbabilities(probabilities);
+      if (typeof matrix == "string") {
+        return;
+      }
       const mathProbabilities = sumMathProbabilities(
         matrix,
         convertedProbabilities
       );
       const decision = Math.max(...mathProbabilities);
-      const answer = prettifyOutput(mathProbabilities, decision);
-      this.result = answer;
+      this.result = prettifyOutput(mathProbabilities, decision);
     },
   },
-};
+});
 </script>
