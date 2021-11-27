@@ -6,11 +6,8 @@
     <div>Result : {{ result }}</div>
   </form>
 </template>
-<script>
-import {
-  findMinInRows,
-  prettifyOutput,
-} from "../DecisonMakingMethods/utils.js";
+<script lang="ts">
+import { findMinInRows, prettifyOutput } from "../DecisonMakingMethods/utils";
 export default {
   data() {
     return {

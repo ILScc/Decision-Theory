@@ -6,11 +6,11 @@
     <div>Result : {{ result }}</div>
   </form>
 </template>
-<script>
+<script lang="ts">
 import {
   buildRiskMatrix,
   prettifyOutput,
-} from "../DecisonMakingMethods/utils.js";
+} from "../DecisonMakingMethods/utils";
 export default {
   data() {
     return {

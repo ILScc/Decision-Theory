@@ -17,14 +17,14 @@
     <div>Result : {{ result }}</div>
   </form>
 </template>
-<script>
+<script lang="ts">
 import {
   getLambda,
   findMinInRows,
   sumMathProbabilities,
   prettifyOutput,
-  convertProbabilities
-} from "../DecisonMakingMethods/utils.js";
+  convertProbabilities,
+} from "../DecisonMakingMethods/utils";
 export default {
   data() {
     return {

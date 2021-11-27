@@ -8,14 +8,14 @@
     <div>Result : {{ result }}</div>
   </form>
 </template>
-<script>
+<script lang="ts">
 import {
   isOnlyPositiveMatrix,
   handleGermeyerValidMatrix,
   handleGermeyerInvalidMatrix,
   prettifyOutput,
   convertProbabilities,
-} from "../DecisonMakingMethods/utils.js";
+} from "../DecisonMakingMethods/utils";
 export default {
   data() {
     return {

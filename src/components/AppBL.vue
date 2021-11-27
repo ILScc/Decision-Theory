@@ -20,7 +20,7 @@ import {
   sumMathProbabilities,
   prettifyOutput,
   convertProbabilities,
-} from "../DecisonMakingMethods/utils.js";
+} from "../DecisonMakingMethods/utils";
 export default {
   data() {
     return {
