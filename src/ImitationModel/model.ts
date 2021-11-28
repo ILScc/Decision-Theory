@@ -7,26 +7,23 @@ const prodPeriod = 30;
 const expectedItemRevenue = 5000;
 const underprodPenalty = expectedItemRevenue - itemProdCost;
 const overprodPenalty = 100;
-const initialReserve = 5;
+const initialReserve = 10;
 
 const calcUnderprodPenalty: calcPenalty = (unproducedItems, penalty) =>
   unproducedItems * penalty;
 const calcOverprodPenalty: calcPenalty = (overproducedItems, penalty) =>
   overproducedItems * penalty;
+const averageDailyDemand = Math.round(prodPlan / prodPeriod);
 
 const getDemand = (min: number, max: number) =>
   Math.random() * (max - min) + min;
-const averageDailyDemand = prodPlan / prodPeriod;
 
-const calcDailyResults = (averageDailyDemand: number) => {
+const calcDailyDemand = (averageDailyDemand: number) => {
   const deviation = (averageDailyDemand * 30) / 100;
   const currentDemand = Math.round(
     getDemand(averageDailyDemand - deviation, averageDailyDemand + deviation)
   );
-  return {
-    dailyRevenue: currentDemand * expectedItemRevenue,
-    dailyDemand: currentDemand,
-  } as DailyResults;
+  return currentDemand;
 };
 
 const calcPeriodResults: PeriodResultsFn = (
@@ -36,30 +33,40 @@ const calcPeriodResults: PeriodResultsFn = (
   plan,
   costs,
   overProdPen,
-  underProdPen
+  underProdPen,
+  expectedItemRevenue
 ) => {
-  const totalCosts = plan * costs;
-  let remainingItems = reserve + plan;
+  let totalProducesItems = 0;
+  let remainingItems = reserve;
   let totalRevenue = 0;
   let penalties = 0;
   for (let i = 0; i < prodPeriod; i++) {
-    const { dailyRevenue, dailyDemand } = calcDailyResults(averageDailyDemand);
+    const dailyDemand = calcDailyDemand(averageDailyDemand);
     if (remainingItems > 0) {
-      totalRevenue += dailyRevenue;
-      console.log(i, totalRevenue, remainingItems);
+      remainingItems >= dailyDemand
+        ? (totalRevenue += dailyDemand * expectedItemRevenue)
+        : (totalRevenue += remainingItems * expectedItemRevenue);
+      remainingItems -= dailyDemand;
+      if (remainingItems <= 0) {
+        penalties += calcUnderprodPenalty(
+          Math.abs(remainingItems),
+          underProdPen
+        );
+      } else {
+        penalties += calcOverprodPenalty(remainingItems, overProdPen);
+      }
+      if (remainingItems < averageDailyDemand && totalProducesItems <= plan) {
+        remainingItems += averageDailyDemand;
+        totalProducesItems += averageDailyDemand;
+      }
     }
-    remainingItems -= dailyDemand;
   }
-  if (remainingItems <= 0) {
-    penalties += calcUnderprodPenalty(Math.abs(remainingItems), underProdPen);
-  } else {
-    penalties += calcOverprodPenalty(remainingItems, overProdPen);
-  }
-
+  const totalCosts = totalProducesItems * costs;
   const income = totalRevenue - totalCosts - penalties;
   return {
     income: income,
     remainingItems: remainingItems,
+    totalProducesItems: totalProducesItems,
     totalCosts: totalCosts,
     totalRevenue: totalRevenue,
     penalties: penalties,
@@ -76,6 +83,7 @@ console.table(
     prodPlan,
     itemProdCost,
     overprodPenalty,
-    underprodPenalty
+    underprodPenalty,
+    expectedItemRevenue
   )
 );
