@@ -2,7 +2,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { findMaxInRows, prettifyOutput } from "../DecisonMakingMethods/utils";
+import { buildRiskMatrix, prettifyOutput } from "../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
     return {
@@ -10,7 +10,6 @@ export default defineComponent({
       result: "",
     };
   },
-
   SAMPLE_MATRIX: [
     [54, 65, 50, 68],
     [67, 74, 55, 72],
@@ -19,10 +18,11 @@ export default defineComponent({
     [76, 69, 67, 59],
   ],
   methods: {
-    calcOptimistic(matrix) {
-      const maxInRows = findMaxInRows(matrix);
-      const decision = Math.max(...maxInRows);
-      this.result = prettifyOutput(maxInRows, decision);
+    calcSavage(matrix) {
+      const riskMatrix = buildRiskMatrix(matrix);
+      const maxRisks = riskMatrix.map((row) => Math.max(...row));
+      const decision = Math.min(...maxRisks);
+      this.result = prettifyOutput(maxRisks, decision);
     },
   },
 });

@@ -1,18 +1,17 @@
 <template>
-    <body>
-        <app-wald />
-        <app-optimistic />
-    </body>
+  <app-matrix></app-matrix>
 </template>
 
-<script>
-import AppWald from "./components/AppWald.vue";
-import AppOptimistic from "./components/AppOptimistic.vue";
-export default {
-    name: "App",
-    components: {
-        AppWald,
-        AppOptimistic,
-    },
-};
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import AppMatrix from "./components/AppMatrix.vue";
+
+
+export default defineComponent({
+  name: "App",
+  components: {
+    AppMatrix,
+  },
+});
 </script>
