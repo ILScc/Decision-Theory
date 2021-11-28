@@ -18,6 +18,11 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
