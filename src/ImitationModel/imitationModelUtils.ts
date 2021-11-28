@@ -59,8 +59,6 @@ export const calcPeriodResults: PeriodResultsFn = (
         Math.abs(remainingItems),
         underProdPen
       );
-    } else {
-      totalPenalties += calcOverprodPenalty(remainingItems, overProdPen);
     }
     if (
       remainingItems <= averageDailyDemand &&
@@ -70,6 +68,8 @@ export const calcPeriodResults: PeriodResultsFn = (
     }
     remainingItems = remainingItems > 0 ? remainingItems : 0;
   }
+  totalPenalties += calcOverprodPenalty(remainingItems, overProdPen);
+
   const totalCosts = totalProducesItems * prodCosts;
   const income = totalRevenue - totalCosts - totalPenalties;
   return {

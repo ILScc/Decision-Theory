@@ -1,14 +1,14 @@
 import { calcPeriodResults } from "./imitationModelUtils";
 // Factory produces car engines. Production plan for month(30 days) - 200 engines
 
-const prodPlan = 400;
+const prodPlan = 200;
 const itemProdCost = 4000;
 const prodPeriod = 30;
-const prodDelay = 3; /* Minimum delay is 1, because we cant't produce new items in the same day*/
+const prodDelay = 2; /* Minimum delay is 1, because we cant't produce new items in the same day*/
 const expectedItemRevenue = 5000;
 const underprodPenalty = expectedItemRevenue - itemProdCost;
 const overprodPenalty = 100;
-const initialReserve = 0;
+const initialReserve = 20;
 const prodPossibilities = Math.round(prodPlan / prodPeriod) * prodDelay;
 const averageDailyDemand = Math.round(prodPlan / prodPeriod);
 
