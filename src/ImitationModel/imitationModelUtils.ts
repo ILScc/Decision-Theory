@@ -5,15 +5,16 @@ const calcUnderprodPenalty: calcPenalty = (unproducedItems, penalty) =>
 const calcOverprodPenalty: calcPenalty = (overproducedItems, penalty) =>
   overproducedItems * penalty;
 
+const getEvenDistrDemand = (min: number, max: number) =>
+  Math.random() * (max - min) + min;
+
 const calcDailyDemand = (averageDailyDemand: number) => {
   const delta = (averageDailyDemand * 10) / 100;
   const currentDemand = Math.round(
-    getDemand(averageDailyDemand - delta, averageDailyDemand + delta)
+    getEvenDistrDemand(averageDailyDemand - delta, averageDailyDemand + delta)
   );
   return currentDemand;
 };
-const getDemand = (min: number, max: number) =>
-  Math.random() * (max - min) + min;
 
 export const calcPeriodResults: PeriodResultsFn = (
   prodPeriod,
@@ -25,9 +26,9 @@ export const calcPeriodResults: PeriodResultsFn = (
   underProdPen,
   expectedItemRevenue,
   prodDelay,
-  prodPossibilities
+  prodCapabilities
 ) => {
-  let totalProducesItems = 0;
+  let totalProducedItems = 0;
   let remainingItems = initialReserve;
   let totalRevenue = 0;
   let totalPenalties = 0;
@@ -37,12 +38,13 @@ export const calcPeriodResults: PeriodResultsFn = (
 
   for (let i = 0; i < prodPeriod; i++) {
     const dailyDemand = calcDailyDemand(averageDailyDemand);
+    console.log(dailyDemand);
     totalDemand += dailyDemand;
 
     if (itemsArriveDays[0] === i) {
       itemsArriveDays.shift();
-      remainingItems += prodPossibilities;
-      totalProducesItems += prodPossibilities;
+      remainingItems += prodCapabilities;
+      totalProducedItems += prodCapabilities;
     }
 
     if (remainingItems > 0) {
@@ -62,7 +64,7 @@ export const calcPeriodResults: PeriodResultsFn = (
     }
     if (
       remainingItems <= averageDailyDemand &&
-      totalProducesItems <= prodPlan
+      totalProducedItems <= prodPlan
     ) {
       itemsArriveDays.push(i + prodDelay);
     }
@@ -70,12 +72,12 @@ export const calcPeriodResults: PeriodResultsFn = (
   }
   totalPenalties += calcOverprodPenalty(remainingItems, overProdPen);
 
-  const totalCosts = totalProducesItems * prodCosts;
+  const totalCosts = totalProducedItems * prodCosts;
   const income = totalRevenue - totalCosts - totalPenalties;
   return {
     income: income,
     remainingItems: remainingItems,
-    totalProducesItems: totalProducesItems,
+    totalProducesItems: totalProducedItems,
     totalCosts: totalCosts,
     totalSoldItems: totalSoldItems,
     totalDemand: totalDemand,
