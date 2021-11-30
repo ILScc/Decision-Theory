@@ -38,7 +38,6 @@ export const calcPeriodResults: PeriodResultsFn = (
 
   for (let i = 0; i < prodPeriod; i++) {
     const dailyDemand = calcDailyDemand(averageDailyDemand);
-    console.log(dailyDemand);
     totalDemand += dailyDemand;
 
     if (itemsArriveDays[0] === i) {
