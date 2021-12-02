@@ -30,6 +30,7 @@
   <app-wald />
 </template>
 <script lang="ts">
+import { MatrixData } from "@/types";
 import { defineComponent } from "vue";
 
 import AppBL from "./AppBL.vue";
@@ -55,17 +56,32 @@ export default defineComponent({
     return {
       rows: null,
       cols: null,
-      cells: new Map(), // rename it
-    };
+      cells: new Map(),
+      matrix: null,
+    } as MatrixData;
   },
   methods: {
     getMatrix() {
-      const orderedMatrix = Array.from(this.cells.keys()).sort((a, b) => a - b);
-      console.log(orderedMatrix);
+      const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
+      const orderedValues = orderedCells.map((key) => {
+        const value = this.cells.get(key);
+        return value ? value : 0; //fix this showing user that he needs to fill input
+      });
+      this.matrix = this.splitCells(orderedValues);
     },
     getValue(e) {
-      console.log(e);
-      this.cells.set(+e.target.__vnode.props.position, e.target.value);
+      this.cells.set(+e.target.__vnode.props.position, +e.target.value);
+    },
+    splitCells<T>(cells: T[]) {
+      //TODO: remove generic type
+      const arrOfArrs: T[][] = [];
+      if (this.cols) {
+        for (let i = 0; i < cells.length; i += this.cols) {
+          arrOfArrs.push(cells.slice(i, i + this.cols));
+        }
+        return arrOfArrs;
+      }
+      return arrOfArrs;
     },
   },
 });
