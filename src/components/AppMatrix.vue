@@ -1,19 +1,24 @@
 <template>
   <form action="">
-    <input type="number" name="rows" v-model="rows" />
+    <input type="number" name="rows" v-model.number="rows" />
     <label for="rows">Insert number of rows (decisions)</label>
-    <input type="number" name="columns" v-model="columns" />
+    <input type="number" name="columns" v-model.number="cols" />
     <label for="columns">Insert number of columns (conditions)</label>
   </form>
   <table>
-    <tbody>
+    <tbody v-if="rows">
       <tr v-for="row in rows" :key="row">
-        <td v-for="col in columns" :key="col">
-          <input type="number" />
-        </td>
+        <input
+          @change="getValue"
+          :position="`${row}${col}`"
+          v-for="col in cols"
+          :key="col"
+          type="number"
+        />
       </tr>
     </tbody>
   </table>
+  <button type="button" @click="getMatrix">Calc</button>
 
   <app-BL />
   <app-germeyer />
@@ -48,10 +53,20 @@ export default defineComponent({
   },
   data() {
     return {
-      rows: 0,
-      columns: 0,
+      rows: null,
+      cols: null,
+      cells: new Map(), // rename it
     };
   },
-  methods: {},
+  methods: {
+    getMatrix() {
+      const orderedMatrix = Array.from(this.cells.keys()).sort((a, b) => a - b);
+      console.log(orderedMatrix);
+    },
+    getValue(e) {
+      console.log(e);
+      this.cells.set(+e.target.__vnode.props.position, e.target.value);
+    },
+  },
 });
 </script>

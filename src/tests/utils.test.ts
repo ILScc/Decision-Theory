@@ -35,7 +35,6 @@ describe("test utils", () => {
   });
   describe("getLambda should produce values in range 0<=value<= 1", () => {
     const lambda = getLambda();
-    console.log(lambda);
     test("lambda should be greater than or equal zero", () => {
       expect(lambda).toBeGreaterThanOrEqual(0);
     });
