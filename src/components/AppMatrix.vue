@@ -1,5 +1,5 @@
 <template>
-  <form action="">
+  <form>
     <input type="number" name="rows" v-model.number="rows" />
     <label for="rows">Insert number of rows (decisions)</label>
     <input type="number" name="columns" v-model.number="cols" />
@@ -18,16 +18,20 @@
       </tr>
     </tbody>
   </table>
-  <button type="button" @click="getMatrix">Calc</button>
+  <button type="button" @click="getMatrix">Confirm matrix</button>
+  <form action="">
+    <label for="probabilities" class="for">Insert probabilities</label>
+    <input type="text" name="probabilities" v-model="probabilities" />
+  </form>
 
-  <app-BL />
-  <app-germeyer />
-  <app-HL />
-  <app-hurwitz />
-  <app-optimistic />
-  <app-p-critreria />
-  <app-savage />
-  <app-wald />
+  <app-BL :matrix="matrix" :probabilities="probabilities" />
+  <app-germeyer :matrix="matrix" />
+  <app-HL :matrix="matrix" />
+  <app-hurwitz :matrix="matrix" />
+  <app-optimistic :matrix="matrix" />
+  <app-p-critreria :matrix="matrix" />
+  <app-savage :matrix="matrix" />
+  <app-wald :matrix="matrix" />
 </template>
 <script lang="ts">
 import { MatrixData } from "@/types";
@@ -58,6 +62,7 @@ export default defineComponent({
       cols: null,
       cells: new Map(),
       matrix: null,
+      probabilities: null,
     } as MatrixData;
   },
   methods: {

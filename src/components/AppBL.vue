@@ -1,34 +1,44 @@
-<template>Place</template>
+<template>
+  <button type="button" @click="calcBL(matrix, probabilities)">calcBL</button>
+  <div>{{ result }}</div>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
 import {
   sumMathProbabilities,
   prettifyOutput,
-  convertProbabilities,
 } from "../DecisonMakingMethods/utils";
-import { CriteriaData } from "../types";
 export default defineComponent({
   data() {
     return {
-      matrix: "",
-      probabilities: "",
       result: "",
-    } as CriteriaData;
+    };
+  },
+  props: {
+    matrix: {
+      type: Object,
+      required: false,
+    },
+    probabilities: {
+      type: String,
+      required: false,
+    },
   },
 
   methods: {
     calcBL(matrix, probabilities) {
-      const convertedProbabilities = convertProbabilities(probabilities);
-      if (typeof matrix == "string") {
-        return;
+      if (typeof probabilities === "string") {
+        const convertedProbabilities = probabilities
+          .split(",")
+          .map((prob) => +prob);
+        const mathProbabilities = sumMathProbabilities(
+          matrix,
+          convertedProbabilities
+        );
+        const decision = Math.max(...mathProbabilities);
+        this.result = prettifyOutput(mathProbabilities, decision);
       }
-      const mathProbabilities = sumMathProbabilities(
-        matrix,
-        convertedProbabilities
-      );
-      const decision = Math.max(...mathProbabilities);
-      this.result = prettifyOutput(mathProbabilities, decision);
     },
   },
 });
