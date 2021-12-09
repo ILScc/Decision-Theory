@@ -1,4 +1,9 @@
-<template>place</template>
+<template>
+  <button type="button" @click="calcHurwitz(matrix, lambda)">
+    calcHurwitz
+  </button>
+  <div>{{ result }}</div>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -11,10 +16,19 @@ import {
 export default defineComponent({
   data() {
     return {
-      matrix: "",
       lambda: getLambda(),
       result: "",
     };
+  },
+  props: {
+    matrix: {
+      type: Object,
+      required: false,
+    },
+    probabilities: {
+      type: String,
+      required: false,
+    },
   },
   methods: {
     calcHurwitz(matrix, lambda = 0.5) {

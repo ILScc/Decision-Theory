@@ -25,8 +25,8 @@
   </form>
 
   <app-BL :matrix="matrix" :probabilities="probabilities" />
-  <app-germeyer :matrix="matrix" />
-  <app-HL :matrix="matrix" />
+  <app-germeyer :matrix="matrix" :probabilities="probabilities"/>
+  <app-HL :matrix="matrix" :probabilities="probabilities" />
   <app-hurwitz :matrix="matrix" />
   <app-optimistic :matrix="matrix" />
   <app-p-critreria :matrix="matrix" />

@@ -8,6 +8,7 @@ import { defineComponent } from "vue";
 import {
   sumMathProbabilities,
   prettifyOutput,
+  convertProbabilities,
 } from "../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
@@ -28,17 +29,13 @@ export default defineComponent({
 
   methods: {
     calcBL(matrix, probabilities) {
-      if (typeof probabilities === "string") {
-        const convertedProbabilities = probabilities
-          .split(",")
-          .map((prob) => +prob);
-        const mathProbabilities = sumMathProbabilities(
-          matrix,
-          convertedProbabilities
-        );
-        const decision = Math.max(...mathProbabilities);
-        this.result = prettifyOutput(mathProbabilities, decision);
-      }
+      const convertedProbabilities = convertProbabilities(probabilities);
+      const mathProbabilities = sumMathProbabilities(
+        matrix,
+        convertedProbabilities
+      );
+      const decision = Math.max(...mathProbabilities);
+      this.result = prettifyOutput(mathProbabilities, decision);
     },
   },
 });

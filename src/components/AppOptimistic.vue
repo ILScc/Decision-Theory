@@ -1,4 +1,7 @@
-<template>Place</template>
+<template>
+  <button type="button" @click="calcOptimistic(matrix)">calcOptimistic</button>
+  <div>{{ result }}</div>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -6,18 +9,20 @@ import { findMaxInRows, prettifyOutput } from "../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
     return {
-      matrix: "",
       result: "",
     };
   },
+  props: {
+    matrix: {
+      type: Object,
+      required: false,
+    },
+    probabilities: {
+      type: String,
+      required: false,
+    },
+  },
 
-  SAMPLE_MATRIX: [
-    [54, 65, 50, 68],
-    [67, 74, 55, 72],
-    [51, 67, 78, 68],
-    [73, 54, 67, 60],
-    [76, 69, 67, 59],
-  ],
   methods: {
     calcOptimistic(matrix) {
       const maxInRows = findMaxInRows(matrix);
