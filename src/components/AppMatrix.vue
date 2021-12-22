@@ -65,14 +65,14 @@ export default defineComponent({
       const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
       const orderedValues = orderedCells.map((key) => {
         const value = this.cells.get(key);
-        return value ? value : 0; //fix this showing user that he needs to fill input
+        return value ? value : null; //fix this showing user that he needs to fill input
       });
-      this.matrix = this.splitCells(orderedValues);
+      this.matrix = this.splitValues(orderedValues);
     },
     getValue(e) {
       this.cells.set(+e.target.__vnode.props.cell, +e.target.value);
     },
-    splitCells<T>(cells: T[]) {
+    splitValues<T>(cells: T[]) {
       //TODO: remove generic type
       const matrix: T[][] = [];
       if (this.cols) {
