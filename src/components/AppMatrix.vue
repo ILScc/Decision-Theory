@@ -10,7 +10,7 @@
       <tr v-for="row in rows" :key="row">
         <input
           @change="getValue"
-          :position="`${row}${col}`"
+          :cell="`${row}${col}`"
           v-for="col in cols"
           :key="col"
           type="number"
@@ -18,7 +18,7 @@
       </tr>
     </tbody>
   </table>
-  <button type="button" @click="getMatrix">Calc</button>
+  <button type="button" @click="buildMatrix">Calc</button>
 
   <app-BL />
   <app-germeyer />
@@ -61,7 +61,7 @@ export default defineComponent({
     } as MatrixData;
   },
   methods: {
-    getMatrix() {
+    buildMatrix() {
       const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
       const orderedValues = orderedCells.map((key) => {
         const value = this.cells.get(key);
@@ -70,18 +70,18 @@ export default defineComponent({
       this.matrix = this.splitCells(orderedValues);
     },
     getValue(e) {
-      this.cells.set(+e.target.__vnode.props.position, +e.target.value);
+      this.cells.set(+e.target.__vnode.props.cell, +e.target.value);
     },
     splitCells<T>(cells: T[]) {
       //TODO: remove generic type
-      const arrOfArrs: T[][] = [];
+      const matrix: T[][] = [];
       if (this.cols) {
         for (let i = 0; i < cells.length; i += this.cols) {
-          arrOfArrs.push(cells.slice(i, i + this.cols));
+          matrix.push(cells.slice(i, i + this.cols));
         }
-        return arrOfArrs;
+        return matrix;
       }
-      return arrOfArrs;
+      return matrix;
     },
   },
 });
