@@ -21,32 +21,30 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as () => number[][],
+      required: true,
     },
     probabilities: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 
   methods: {
-    calcHL(matrix, probabilities, lambda = 0.5) {
-      if (typeof probabilities === "string") {
-        const convertedProbabilities = convertProbabilities(probabilities);
-        const lambdaMathProbabilities = sumMathProbabilities(
-          matrix,
-          convertedProbabilities
-        ).map((value) => lambda * value);
-        const lambdaMinInRows = findMinInRows(matrix).map(
-          (value) => (1 - Number(lambda.toFixed(1))) * value
-        );
-        const options = lambdaMathProbabilities.map(
-          (value, i) => value + lambdaMinInRows[i]
-        );
-        const decision = Math.max(...options);
-        this.result = prettifyOutput(options, decision);
-      }
+    calcHL(matrix: number[][], probabilities, lambda = 0.5) {
+      const convertedProbabilities = convertProbabilities(probabilities);
+      const lambdaMathProbabilities = sumMathProbabilities(
+        matrix,
+        convertedProbabilities
+      ).map((value) => lambda * value);
+      const lambdaMinInRows = findMinInRows(matrix).map(
+        (value) => (1 - Number(lambda.toFixed(1))) * value
+      );
+      const options = lambdaMathProbabilities.map(
+        (value, i) => value + lambdaMinInRows[i]
+      );
+      const decision = Math.max(...options);
+      this.result = prettifyOutput(options, decision);
     },
   },
 });

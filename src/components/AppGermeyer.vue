@@ -14,6 +14,7 @@ import {
   prettifyOutput,
   convertProbabilities,
 } from "../DecisonMakingMethods/utils";
+
 export default defineComponent({
   data() {
     return {
@@ -22,16 +23,16 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as () => number[][],
+      required: true,
     },
     probabilities: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   methods: {
-    calcGermeyer(matrix, probabilities) {
+    calcGermeyer(matrix: number[][], probabilities: string) {
       const convertedProbabilities = convertProbabilities(probabilities);
       const isMatrixValid = !isOnlyPositiveMatrix(matrix);
       const minValueMathProbs = isMatrixValid

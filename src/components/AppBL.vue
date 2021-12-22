@@ -18,8 +18,8 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as () => number[][],
+      required: true,
     },
     probabilities: {
       type: String,
@@ -28,7 +28,7 @@ export default defineComponent({
   },
 
   methods: {
-    calcBL(matrix, probabilities) {
+    calcBL(matrix: number[][], probabilities) {
       const convertedProbabilities = convertProbabilities(probabilities);
       const mathProbabilities = sumMathProbabilities(
         matrix,

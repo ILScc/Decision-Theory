@@ -34,7 +34,7 @@
   <app-wald :matrix="matrix" />
 </template>
 <script lang="ts">
-import { MatrixData } from "@/types";
+import { BuilderData } from "@/types";
 import { defineComponent } from "vue";
 
 import AppBL from "./AppBL.vue";
@@ -61,9 +61,9 @@ export default defineComponent({
       rows: null,
       cols: null,
       cells: new Map(),
-      matrix: null,
-      probabilities: null,
-    } as MatrixData;
+      matrix: [[]],
+      probabilities: "",
+    } as BuilderData;
   },
   methods: {
     buildMatrix() {
@@ -72,10 +72,16 @@ export default defineComponent({
         const value = this.cells.get(key);
         return value ? value : null; //fix this showing user that he needs to fill input
       });
-      this.matrix = this.splitValues(orderedValues);
+      const validatedVals = this.validateValues(orderedValues);
+      this.matrix = this.splitValues(validatedVals);
+      console.log(this.matrix);
     },
     getValue(e) {
       this.cells.set(+e.target.__vnode.props.cell, +e.target.value);
+    },
+    validateValues(v) {
+      // implement better version
+      return v.map((val) => (val === null ? 0 : val));
     },
     splitValues<T>(cells: T[]) {
       //TODO: remove generic type

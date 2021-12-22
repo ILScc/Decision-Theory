@@ -19,10 +19,11 @@ export default defineComponent({
     },
   },
   methods: {
-    calcWald(matrix: any) {
+    calcWald(matrix) {
       const minInRows = findMinInRows(matrix);
       const decision = Math.max(...minInRows);
       this.result = prettifyOutput(minInRows, decision);
+      console.log(matrix);
     },
   },
 });

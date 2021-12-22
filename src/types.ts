@@ -1,7 +1,7 @@
-export interface MatrixData {
+export interface BuilderData {
   rows: number | null;
   cols: number | null;
   cells: Map<number, number>;
-  matrix: null | number[][] | (number | null)[][];
-  probabilities: null | string;
+  matrix: number[][];
+  probabilities: string;
 }
