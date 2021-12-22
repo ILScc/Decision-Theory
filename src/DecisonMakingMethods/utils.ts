@@ -45,7 +45,7 @@ export const getLambda = () => {
 };
 
 export const convertProbabilities = (probabilities: string) =>
-  probabilities.split(",").map((p) => Number(p));
+  probabilities.split(",").map((p) => +p);
 
 export const buildRiskMatrix = (matrix: number[][]) => {
   const maxInCols = calcMaxInColumns(matrix);

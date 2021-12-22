@@ -1,4 +1,9 @@
-<template>place</template>
+<template>
+  <button type="button" @click="calcGermeyer(matrix, probabilities)">
+    calcGermeyer
+  </button>
+  <div>{{ result }}</div>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -12,10 +17,18 @@ import {
 export default defineComponent({
   data() {
     return {
-      matrix: "",
-      probabilities: "",
       result: "",
     };
+  },
+  props: {
+    matrix: {
+      type: Object,
+      required: false,
+    },
+    probabilities: {
+      type: String,
+      required: false,
+    },
   },
   methods: {
     calcGermeyer(matrix, probabilities) {
