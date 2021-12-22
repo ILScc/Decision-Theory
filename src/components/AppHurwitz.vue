@@ -25,10 +25,6 @@ export default defineComponent({
       type: Object,
       required: false,
     },
-    probabilities: {
-      type: String,
-      required: false,
-    },
   },
   methods: {
     calcHurwitz(matrix, lambda = 0.5) {
