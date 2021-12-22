@@ -17,10 +17,6 @@ export default defineComponent({
       type: Object,
       required: false,
     },
-    probabilities: {
-      type: String,
-      required: false,
-    },
   },
 
   methods: {
