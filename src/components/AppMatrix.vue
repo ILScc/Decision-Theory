@@ -77,7 +77,10 @@ export default defineComponent({
       console.log(this.matrix);
     },
     getValue(e) {
-      this.cells.set(+e.target.__vnode.props.cell, +e.target.value);
+      console.log(e);
+      const cellNumPath = e.target.attributes[0].value;
+      const cellValue = e.target.value;
+      this.cells.set(+cellNumPath, +cellValue);
     },
     validateValues(v) {
       // implement better version
