@@ -1,30 +1,40 @@
 <template>
-  <form action="">
-    <input type="number" name="rows" v-model="rows" />
+  <form>
+    <input type="number" name="rows" v-model.number="rows" />
     <label for="rows">Insert number of rows (decisions)</label>
-    <input type="number" name="columns" v-model="columns" />
+    <input type="number" name="columns" v-model.number="cols" />
     <label for="columns">Insert number of columns (conditions)</label>
   </form>
   <table>
-    <tbody>
+    <tbody v-if="rows">
       <tr v-for="row in rows" :key="row">
-        <td v-for="col in columns" :key="col">
-          <input type="number" />
-        </td>
+        <input
+          @change="getValue"
+          :cell="`${row}${col}`"
+          v-for="col in cols"
+          :key="col"
+          type="number"
+        />
       </tr>
     </tbody>
   </table>
+  <button type="button" @click="buildMatrix">Confirm matrix</button>
+  <form action="">
+    <label for="probabilities" class="for">Insert probabilities</label>
+    <input type="text" name="probabilities" v-model="probabilities" />
+  </form>
 
-  <app-BL />
-  <app-germeyer />
-  <app-HL />
-  <app-hurwitz />
-  <app-optimistic />
-  <app-p-critreria />
-  <app-savage />
-  <app-wald />
+  <app-BL :matrix="matrix" :probabilities="probabilities" />
+  <app-germeyer :matrix="matrix" :probabilities="probabilities" />
+  <app-HL :matrix="matrix" :probabilities="probabilities" />
+  <app-hurwitz :matrix="matrix" />
+  <app-optimistic :matrix="matrix" />
+  <app-p-critreria :matrix="matrix" />
+  <app-savage :matrix="matrix" />
+  <app-wald :matrix="matrix" />
 </template>
 <script lang="ts">
+import { BuilderData } from "@/types";
 import { defineComponent } from "vue";
 
 import AppBL from "./AppBL.vue";
@@ -48,10 +58,42 @@ export default defineComponent({
   },
   data() {
     return {
-      rows: 0,
-      columns: 0,
-    };
+      rows: null,
+      cols: null,
+      cells: new Map(),
+      matrix: [[]],
+      probabilities: "",
+    } as BuilderData;
   },
-  methods: {},
+  methods: {
+    buildMatrix() {
+      const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
+      const orderedValues = orderedCells.map((key) => {
+        const value = this.cells.get(key);
+        return value ? value : null; //fix this showing user that he needs to fill input
+      });
+      const validatedVals = this.validateValues(orderedValues);
+      this.matrix = this.splitValues(validatedVals);
+      console.log(this.matrix);
+    },
+    getValue(e) {
+      this.cells.set(+e.target.__vnode.props.cell, +e.target.value);
+    },
+    validateValues(v) {
+      // implement better version
+      return v.map((val) => (val === null ? 0 : val));
+    },
+    splitValues<T>(cells: T[]) {
+      //TODO: remove generic type
+      const matrix: T[][] = [];
+      if (this.cols) {
+        for (let i = 0; i < cells.length; i += this.cols) {
+          matrix.push(cells.slice(i, i + this.cols));
+        }
+        return matrix;
+      }
+      return matrix;
+    },
+  },
 });
 </script>

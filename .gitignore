@@ -2,6 +2,8 @@
 node_modules
 /dist
 
+#tasks file
+todos
 
 # local env files
 .env.local

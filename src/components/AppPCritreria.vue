@@ -1,9 +1,11 @@
-<template>place</template>
+<template>
+  <button type="button" @click="calcPCriteria(matrix)">calcHurwitz</button>
+  <div>{{ result }}</div>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
 import {
-  getLambda,
   isOnlyPositiveMatrix,
   handlePCriterionValidMatrix,
   handlePCriterionInvalidMatrix,
@@ -12,10 +14,14 @@ import {
 export default defineComponent({
   data() {
     return {
-      matrix: "",
-      lambda: getLambda(),
       result: "",
     };
+  },
+  props: {
+    matrix: {
+      type: Object,
+      required: false,
+    },
   },
   methods: {
     calcPCriteria(matrix) {
