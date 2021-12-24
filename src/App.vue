@@ -4,9 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
 import AppMatrix from "./components/AppMatrix.vue";
-
 
 export default defineComponent({
   name: "App",
