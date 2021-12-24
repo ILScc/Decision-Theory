@@ -1,5 +1,7 @@
 <template>
-  <button type="button" @click="calcPCriteria(matrix)">calcHurwitz</button>
+  <button class="calc-btn" type="button" @click="calcPCriteria(matrix)">
+    calcHurwitz
+  </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
@@ -35,3 +37,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.calc-btn {
+  font-size: 90%;
+
+}
+</style>

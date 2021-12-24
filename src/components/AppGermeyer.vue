@@ -1,5 +1,5 @@
 <template>
-  <button type="button" @click="calcGermeyer(matrix, probabilities)">
+  <button class="calc-btn" type="button" @click="calcGermeyer(matrix, probabilities)">
     calcGermeyer
   </button>
   <div>{{ result }}</div>
@@ -44,3 +44,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.calc-btn{
+  font-size: 90%;
+ 
+}
+</style>

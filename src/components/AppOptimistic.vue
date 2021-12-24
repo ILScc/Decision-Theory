@@ -1,5 +1,5 @@
 <template>
-  <button type="button" @click="calcOptimistic(matrix)">calcOptimistic</button>
+  <button class="calc-btn" type="button" @click="calcOptimistic(matrix)">calcOptimistic</button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
@@ -28,3 +28,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.calc-btn{
+  font-size: 90%;
+
+}
+</style>

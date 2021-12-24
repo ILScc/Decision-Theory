@@ -1,5 +1,5 @@
 <template>
-  <button type="button" @click="calcHurwitz(matrix, lambda)">
+  <button class="calc-btn" type="button" @click="calcHurwitz(matrix, lambda)">
     calcHurwitz
   </button>
   <div>{{ result }}</div>
@@ -43,3 +43,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.calc-btn {
+  font-size: 90%;
+
+}
+</style>

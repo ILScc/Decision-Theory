@@ -1,40 +1,43 @@
 <template>
-  <div class="matrix-builder">
-    <form class="cells-builder">
-      <input type="number" name="rows" v-model.number="rows" />
-      <label for="rows">Insert number of rows (decisions)</label>
-      <input type="number" name="columns" v-model.number="cols" />
-      <label for="columns">Insert number of columns (conditions)</label>
-      <input type="text" name="probabilities" v-model="probabilities" />
-      <label for="probabilities" class="for">Insert probabilities</label>
-    </form>
-    <table>
-      <tbody v-if="rows">
-        <tr v-for="row in rows" :key="row">
-          <input
-            @change="getValue"
-            :cell="`${row}${col}`"
-            v-for="col in cols"
-            :key="col"
-            type="number"
-          />
-        </tr>
-      </tbody>
-    </table>
-    <button class="build-btn" type="button" @click="buildMatrix">
-      Build matrix
-    </button>
-  </div>
+  <div class="wrapper">
+    <div class="matrix-builder">
+      <form class="cells-builder">
+        <input type="number" name="rows" v-model.number="rows" />
+        <label for="rows">Insert number of rows (decisions)</label>
+        <input type="number" name="columns" v-model.number="cols" />
+        <label for="columns">Insert number of columns (conditions)</label>
+        <input type="text" name="probabilities" v-model="probabilities" />
+        <label for="probabilities" class="for">Insert probabilities</label>
+      </form>
+      <table class="matrix">
+        <tbody class="matrix" v-if="rows">
+          <tr v-for="row in rows" :key="row">
+            <input
+              class="cell"
+              @change="getValue"
+              :cell="`${row}${col}`"
+              v-for="col in cols"
+              :key="col"
+              type="number"
+            />
+          </tr>
+        </tbody>
+      </table>
+      <button class="build-btn" type="button" @click="buildMatrix">
+        Build matrix
+      </button>
+    </div>
 
-  <div class="crit-wrapper">
-    <app-BL :matrix="matrix" :probabilities="probabilities" />
-    <app-germeyer :matrix="matrix" :probabilities="probabilities" />
-    <app-HL :matrix="matrix" :probabilities="probabilities" />
-    <app-hurwitz :matrix="matrix" />
-    <app-optimistic :matrix="matrix" />
-    <app-p-critreria :matrix="matrix" />
-    <app-savage :matrix="matrix" />
-    <app-wald :matrix="matrix" />
+    <div class="crit-wrapper">
+      <app-BL :matrix="matrix" :probabilities="probabilities" />
+      <app-germeyer :matrix="matrix" :probabilities="probabilities" />
+      <app-HL :matrix="matrix" :probabilities="probabilities" />
+      <app-hurwitz :matrix="matrix" />
+      <app-optimistic :matrix="matrix" />
+      <app-p-critreria :matrix="matrix" />
+      <app-savage :matrix="matrix" />
+      <app-wald :matrix="matrix" />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -105,16 +108,39 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+}
 .crit-wrapper {
   display: flex;
   flex-direction: column;
   max-width: 50%;
+  margin-top: 20px;
+  gap: 10px;
+}
+.matrix {
+  max-width: 100vw;
+}
+.cell {
+  width: 6rem;
+}
+@media (max-width: 500px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cell {
+    width: 1.5rem;
+  }
+}
+.build-btn {
   margin-top: 10px;
 }
 .cells-builder {
   display: flex;
   flex-direction: column;
-  max-width: 25%;
   margin: 10px;
 }
 .cells-builder input {
@@ -123,6 +149,5 @@ export default defineComponent({
 .matrix-builder {
   display: flex;
   flex-direction: column;
-  max-width: 50%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <button type="button" @click="calcSavage(matrix)">calcSavage</button>
+  <button class="calc-btn" type="button" @click="calcSavage(matrix)">calcSavage</button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
@@ -29,3 +29,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.calc-btn {
+ font-size: 90%;
+ 
+}
+</style>

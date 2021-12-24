@@ -1,5 +1,7 @@
 <template>
-  <button type="button" @click="calcHL(matrix, probabilities)">calcHL</button>
+  <button class="calc-btn" type="button" @click="calcHL(matrix, probabilities)">
+    calcHL
+  </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
@@ -49,3 +51,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.calc-btn {
+  font-size: 90%;
+ 
+}
+</style>
