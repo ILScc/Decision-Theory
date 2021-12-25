@@ -23,7 +23,6 @@ export default defineComponent({
       const minInRows = findMinInRows(matrix);
       const decision = Math.max(...minInRows);
       this.result = prettifyOutput(minInRows, decision);
-      console.log(matrix);
     },
   },
 });

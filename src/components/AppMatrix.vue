@@ -85,7 +85,8 @@ export default defineComponent({
     },
     getValue(e) {
       console.log(e);
-      const cellNumPath = e.target.attributes[0].value;
+      const cellNumPath = e.target.attributes[1].value;
+      console.log(e.target.attributes[1].value);
       const cellValue = e.target.value;
       this.cells.set(+cellNumPath, +cellValue);
     },
