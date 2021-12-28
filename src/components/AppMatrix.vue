@@ -35,7 +35,7 @@
           <tr v-for="row in rows" :key="row">
             <input
               class="cell"
-              @change="getValue"
+              @change="handleInput"
               :cell="`${row}${col}`"
               v-for="col in cols"
               :key="col"
@@ -95,9 +95,9 @@ export default defineComponent({
   },
   methods: {
     buildMatrix() {
-      if (this.invalidCells.length) {
-        // this.alertUser();
-        console.log("warning")
+      this.invalidCells();
+      if (this.invalidCells().length) {
+        this.markInvalid();
         return;
       }
       const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
@@ -108,11 +108,14 @@ export default defineComponent({
       this.matrix = this.splitValues(orderedValues);
     },
 
-    getValue({ target }) {
+    handleInput({ target }) {
       const cellNumPath = target.attributes.cell.value;
       const cellValue = target.value;
       this.cells.set(+cellNumPath, +cellValue);
+      this.markValid(target);
+      console.log(target);
     },
+
     splitValues<T>(cells: T[]) {
       const matrix: T[][] = [];
       if (this.cols) {
@@ -123,8 +126,16 @@ export default defineComponent({
       }
       return matrix;
     },
-  },
-  computed: {
+    markInvalid() {
+      this.invalidCells().forEach((cell) => cell.classList.add("cell-invalid"));
+      console.log(this.invalidCells);
+    },
+    markValid(target) {
+      console.log(target.classList);
+      if (target.classList.contains("cell-invalid")) {
+        target.classList.remove("cell-invalid");
+      }
+    },
     invalidCells() {
       const cells = document.getElementsByClassName(
         "cell" // eslint-disable-next-line no-undef
@@ -168,7 +179,17 @@ export default defineComponent({
   border-radius: 10px;
 }
 .cell {
+  border: solid 1px;
+  border-radius: 4px;
+  margin: 2px;
+  padding: 0;
   width: 6rem;
+
+  font: inherit;
+  line-height: normal;
+}
+.cell-invalid {
+  border: solid 1px red;
 }
 @media (max-width: 500px) {
   .wrapper {
