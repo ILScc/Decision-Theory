@@ -1,5 +1,9 @@
 # simple-st
-
+This app can be used for calculating decision criterias
+1. Insert number of rows and columns of your matrix
+2. Insert probabilities (if needed)
+3. Press "Build matrix button"
+4. Choose criteria to calculate
 ## Project setup
 ```
 npm install
