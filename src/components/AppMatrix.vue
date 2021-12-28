@@ -50,14 +50,14 @@
     </div>
 
     <div class="crit-wrapper">
-      <app-BL :matrix="matrix" :probabilities="probabilities" />
-      <app-germeyer :matrix="matrix" :probabilities="probabilities" />
-      <app-HL :matrix="matrix" :probabilities="probabilities" />
-      <app-hurwitz :matrix="matrix" />
-      <app-optimistic :matrix="matrix" />
-      <app-p-critreria :matrix="matrix" />
-      <app-savage :matrix="matrix" />
-      <app-wald :matrix="matrix" />
+      <b-l-criteria :matrix="matrix" :probabilities="probabilities" />
+      <germeyer-criteria :matrix="matrix" :probabilities="probabilities" />
+      <h-l-criteria :matrix="matrix" :probabilities="probabilities" />
+      <hurwitz-criteria :matrix="matrix" />
+      <optimistic-criteria :matrix="matrix" />
+      <p-criteria :matrix="matrix" />
+      <savage-criteria :matrix="matrix" />
+      <wald-criteria :matrix="matrix" />
     </div>
   </main>
 </template>
@@ -65,24 +65,24 @@
 import { BuilderData } from "@/types";
 import { defineComponent } from "vue";
 
-import AppBL from "./AppBL.vue";
-import AppGermeyer from "./AppGermeyer.vue";
-import AppHL from "./AppHL.vue";
-import AppHurwitz from "./AppHurwitz.vue";
-import AppOptimistic from "./AppOptimistic.vue";
-import AppPCritreria from "./AppPCritreria.vue";
-import AppSavage from "./AppSavage.vue";
-import AppWald from "./AppWald.vue";
+import BLCriteria from "./BLCriteria.vue";
+import GermeyerCriteria from "./GermeyerCriteria.vue";
+import HLCriteria from "./HLCriteria.vue";
+import HurwitzCriteria from "./HurwitzCriteria.vue";
+import OptimisticCriteria from "./OptimisticCriteria.vue";
+import PCriteria from "./PCriteria.vue";
+import SavageCriteria from "./SavageCriteria.vue";
+import WaldCriteria from "./WaldCriteria.vue";
 export default defineComponent({
   components: {
-    AppBL,
-    AppGermeyer,
-    AppHL,
-    AppHurwitz,
-    AppOptimistic,
-    AppPCritreria,
-    AppSavage,
-    AppWald,
+    BLCriteria,
+    GermeyerCriteria,
+    HLCriteria,
+    HurwitzCriteria,
+    OptimisticCriteria,
+    PCriteria,
+    SavageCriteria,
+    WaldCriteria,
   },
   data() {
     return {
