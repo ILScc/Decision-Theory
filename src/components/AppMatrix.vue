@@ -95,6 +95,11 @@ export default defineComponent({
   },
   methods: {
     buildMatrix() {
+      if (this.invalidCells.length) {
+        // this.alertUser();
+        console.log("warning")
+        return;
+      }
       const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
       const orderedValues = orderedCells.map((key) => {
         const value = this.cells.get(key);
@@ -102,6 +107,7 @@ export default defineComponent({
       });
       this.matrix = this.splitValues(orderedValues);
     },
+
     getValue({ target }) {
       const cellNumPath = target.attributes.cell.value;
       const cellValue = target.value;
@@ -116,6 +122,21 @@ export default defineComponent({
         return matrix;
       }
       return matrix;
+    },
+  },
+  computed: {
+    invalidCells() {
+      const cells = document.getElementsByClassName(
+        "cell" // eslint-disable-next-line no-undef
+      ) as HTMLCollectionOf<HTMLInputElement>;
+      const invalidCells: HTMLInputElement[] = [];
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i].value === "") {
+          console.log(cells[i]);
+          invalidCells.push(cells[i]);
+        }
+      }
+      return invalidCells;
     },
   },
 });
@@ -136,6 +157,7 @@ export default defineComponent({
 /* matrix */
 .matrix {
   max-width: 100vw;
+  margin: 5px auto;
 }
 
 .cells-builder__settings {
@@ -182,7 +204,7 @@ export default defineComponent({
   border: solid 1px;
   background-color: none;
   border-radius: 10px;
-  margin: 0;
+  margin: 5px;
   padding: 3px;
   width: auto;
   overflow: visible;
