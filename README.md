@@ -1,7 +1,8 @@
 # simple-st
 This app can be used for calculating decision criterias
 1. Insert number of rows and columns of your matrix
-2. Insert probabilities (if needed)
+    Node: numbers in cells may be negative - this will show persons losses
+2. Insert probabilities (if needed) - their sum must be equal 1
 3. Press "Build matrix button"
 4. Choose criteria to calculate
 ## Project setup
