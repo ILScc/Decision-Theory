@@ -1,11 +1,15 @@
 <template>
-  <button class="button-main" type="button" @click="calcHurwitz(matrix, lambda)">
+  <button
+    class="button-main"
+    type="button"
+    @click="calcHurwitz(matrix, lambda)"
+  >
     calcHurwitz
   </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent,PropType } from "vue";
 
 import {
   getLambda,
@@ -22,12 +26,12 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as PropType<number[][]>,
+      required: true,
     },
   },
   methods: {
-    calcHurwitz(matrix, lambda = 0.5) {
+    calcHurwitz(matrix: number[][], lambda = 0.5) {
       const lambdaMinInRows = findMinInRows(matrix).map(
         (value) => value * lambda
       );

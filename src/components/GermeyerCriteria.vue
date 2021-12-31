@@ -9,7 +9,7 @@
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import {
   isOnlyPositiveMatrix,
@@ -27,7 +27,7 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object as () => number[][],
+      type: Object as PropType<number[][]>,
       required: true,
     },
     probabilities: {

@@ -1,9 +1,11 @@
 <template>
-  <button class="button-main" type="button" @click="calcSavage(matrix)">calcSavage</button>
+  <button class="button-main" type="button" @click="calcSavage(matrix)">
+    calcSavage
+  </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import { buildRiskMatrix, prettifyOutput } from "../DecisonMakingMethods/utils";
 export default defineComponent({
@@ -15,12 +17,12 @@ export default defineComponent({
 
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as PropType<number[][]>,
+      required: true,
     },
   },
   methods: {
-    calcSavage(matrix) {
+    calcSavage(matrix: number[][]) {
       const riskMatrix = buildRiskMatrix(matrix);
       const maxRisks = riskMatrix.map((row) => Math.max(...row));
       const decision = Math.min(...maxRisks);
@@ -29,7 +31,8 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>.button-main {
+<style scoped>
+.button-main {
   height: 8%;
   border: solid 1px;
   background-color: none;

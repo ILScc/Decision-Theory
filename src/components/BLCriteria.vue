@@ -1,11 +1,15 @@
 <template>
-  <button class="button-main" type="button" @click="calcBL(matrix, probabilities)">
+  <button
+    class="button-main"
+    type="button"
+    @click="calcBL(matrix, probabilities)"
+  >
     calcBL
   </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import {
   sumMathProbabilities,
@@ -20,17 +24,17 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object as () => number[][],
+      type: Object as PropType<number[][]>,
       required: true,
     },
     probabilities: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 
   methods: {
-    calcBL(matrix: number[][], probabilities) {
+    calcBL(matrix: number[][], probabilities: string) {
       const convertedProbabilities = convertProbabilities(probabilities);
       const mathProbabilities = sumMathProbabilities(
         matrix,

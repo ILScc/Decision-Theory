@@ -5,7 +5,7 @@
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import {
   isOnlyPositiveMatrix,
@@ -21,12 +21,12 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as PropType<number[][]>,
+      required: true,
     },
   },
   methods: {
-    calcPCriteria(matrix) {
+    calcPCriteria(matrix: number[][]) {
       const isMatrixValid = isOnlyPositiveMatrix(matrix);
       const rowMultiplications = isMatrixValid
         ? handlePCriterionValidMatrix(matrix)

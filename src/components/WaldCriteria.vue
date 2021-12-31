@@ -5,7 +5,7 @@
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { findMinInRows, prettifyOutput } from "../DecisonMakingMethods/utils";
 
 export default defineComponent({
@@ -16,12 +16,12 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object,
-      required: false,
+      type: Object as PropType<number[][]>,
+      required: true,
     },
   },
   methods: {
-    calcWald(matrix) {
+    calcWald(matrix: number[][]) {
       const minInRows = findMinInRows(matrix);
       const decision = Math.max(...minInRows);
       this.result = prettifyOutput(minInRows, decision);

@@ -1,11 +1,15 @@
 <template>
-  <button class="button-main" type="button" @click="calcHL(matrix, probabilities)">
+  <button
+    class="button-main"
+    type="button"
+    @click="calcHL(matrix, probabilities)"
+  >
     calcHL
   </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import {
   getLambda,
@@ -23,7 +27,7 @@ export default defineComponent({
   },
   props: {
     matrix: {
-      type: Object as () => number[][],
+      type: Object as PropType<number[][]>,
       required: true,
     },
     probabilities: {
@@ -33,7 +37,7 @@ export default defineComponent({
   },
 
   methods: {
-    calcHL(matrix: number[][], probabilities, lambda = 0.5) {
+    calcHL(matrix: number[][], probabilities: string, lambda = 0.5) {
       const convertedProbabilities = convertProbabilities(probabilities);
       const lambdaMathProbabilities = sumMathProbabilities(
         matrix,
