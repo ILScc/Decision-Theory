@@ -95,28 +95,29 @@ export default defineComponent({
   },
   methods: {
     buildMatrix() {
-      this.invalidCells();
-      if (this.invalidCells().length) {
-        this.markInvalid();
+      const invalidCells = this.getInvalidCells();
+      if (invalidCells.length) {
+        this.markInvalid(invalidCells);
         return;
       }
-      const orderedCells = Array.from(this.cells.keys()).sort((a, b) => a - b);
-      const orderedValues = orderedCells.map((key) => {
+      const orderedCells = [...this.cells.keys()].sort((a, b) => a - b);
+      const orderedCellsValues = orderedCells.map((key) => {
         const value = this.cells.get(key);
         return value ? value : 0;
       });
-      this.matrix = this.splitValues(orderedValues);
+      this.matrix = this.buildMatrixRows(orderedCellsValues);
     },
 
     handleInput({ target }) {
-      const cellNumPath = target.attributes.cell.value;
+      const cellOrderPath = target.attributes.cell.value;
       const cellValue = target.value;
-      this.cells.set(+cellNumPath, +cellValue);
-      this.markValid(target);
-      console.log(target);
+      this.cells.set(+cellOrderPath, +cellValue);
+      if (target.classList.contains("cell-invalid")) {
+        target.classList.remove("cell-invalid");
+      }
     },
 
-    splitValues<T>(cells: T[]) {
+    buildMatrixRows<T>(cells: T[]) {
       const matrix: T[][] = [];
       if (this.cols) {
         for (let i = 0; i < cells.length; i += this.cols) {
@@ -126,17 +127,12 @@ export default defineComponent({
       }
       return matrix;
     },
-    markInvalid() {
-      this.invalidCells().forEach((cell) => cell.classList.add("cell-invalid"));
-      console.log(this.invalidCells);
+
+    markInvalid(invalidCells) {
+      invalidCells.forEach((cell) => cell.classList.add("cell-invalid"));
     },
-    markValid(target) {
-      console.log(target.classList);
-      if (target.classList.contains("cell-invalid")) {
-        target.classList.remove("cell-invalid");
-      }
-    },
-    invalidCells() {
+
+    getInvalidCells() {
       const cells = document.getElementsByClassName(
         "cell" // eslint-disable-next-line no-undef
       ) as HTMLCollectionOf<HTMLInputElement>;
