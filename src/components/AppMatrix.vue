@@ -48,14 +48,15 @@
         :cols="cols"
         :rows="rows"
         :cells="cells"
+        :isBuilded="isBuilded"
         @build-matrix="handleBuild"
       />
     </div>
 
     <div class="crit-wrapper">
-      <b-l-criteria :matrix="matrix" :probabilities="probabilities" />
+      <bayes-laplace :matrix="matrix" :probabilities="probabilities" />
       <germeyer-criteria :matrix="matrix" :probabilities="probabilities" />
-      <h-l-criteria :matrix="matrix" :probabilities="probabilities" />
+      <hodges-lehmann :matrix="matrix" :probabilities="probabilities" />
       <hurwitz-criteria :matrix="matrix" />
       <optimistic-criteria :matrix="matrix" />
       <p-criteria :matrix="matrix" />
@@ -67,27 +68,27 @@
 <script lang="ts">
 import { BuilderData } from "@/types";
 import { defineComponent } from "vue";
-
-import BLCriteria from "./BLCriteria.vue";
+import AppMatrixBuildBtn from "./AppMatrixBuildBtn.vue";
+import BayesLaplace from "./BayesLaplace.vue";
 import GermeyerCriteria from "./GermeyerCriteria.vue";
-import HLCriteria from "./HLCriteria.vue";
 import HurwitzCriteria from "./HurwitzCriteria.vue";
 import OptimisticCriteria from "./OptimisticCriteria.vue";
 import PCriteria from "./PCriteria.vue";
 import SavageCriteria from "./SavageCriteria.vue";
 import WaldCriteria from "./WaldCriteria.vue";
-import AppMatrixBuildBtn from "./AppMatrixBuildBtn.vue";
+import HodgesLehmann from "./HodgesLehmann.vue";
+
 export default defineComponent({
   components: {
-    BLCriteria,
+    BayesLaplace,
     GermeyerCriteria,
-    HLCriteria,
     HurwitzCriteria,
     OptimisticCriteria,
     PCriteria,
     SavageCriteria,
     WaldCriteria,
     AppMatrixBuildBtn,
+    HodgesLehmann,
   },
   data() {
     return {
@@ -96,16 +97,20 @@ export default defineComponent({
       matrix: [],
       cells: new Map(),
       probabilities: "",
+      isBuilded: undefined,
     } as BuilderData;
   },
 
   methods: {
     handleBuild(matrix) {
+      if (!this.cols || !this.rows) return;
       const invalidCells = this.getInvalidCells();
       if (invalidCells.length) {
         this.markInvalid(invalidCells);
+        this.isBuilded = false;
         return;
       }
+      this.isBuilded = true;
       this.matrix = matrix;
     },
     handleInput({ target }) {

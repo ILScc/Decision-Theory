@@ -1,5 +1,10 @@
 <template>
-  <button class="button-main" type="button" @click="buildMatrix">
+  <button
+    class="button-main"
+    type="button"
+    @click="buildMatrix"
+    :class="isMatrixBuilded"
+  >
     Build matrix
   </button>
 </template>
@@ -10,6 +15,7 @@ export default defineComponent({
     rows: { type: Number, required: true },
     cols: { type: Number, required: true },
     cells: { type: Object, required: true },
+    isBuilded: { type: Boolean, required: false },
   },
   emits: {
     buildMatrix: null,
@@ -19,9 +25,10 @@ export default defineComponent({
       const orderedCells = [...this.cells.keys()].sort((a, b) => a - b);
       const orderedCellsValues = orderedCells.map((key) => {
         const value = this.cells.get(key);
-        return value ? value : 0;
+        return value ? value : NaN;
       });
-      this.$emit("buildMatrix", this.buildMatrixRows(orderedCellsValues));
+      const matrix = this.buildMatrixRows(orderedCellsValues);
+      this.$emit("buildMatrix", matrix);
     },
     buildMatrixRows<T>(cells: T[]) {
       const matrix: T[][] = [];
@@ -34,11 +41,12 @@ export default defineComponent({
       return matrix;
     },
   },
-  //   computed: {
-  //     isMatrixBuilded(): string {
-  //       return this.isBuilded ? "button-main--success" : "button-main--fail";
-  //     },
-  //   },
+  computed: {
+    isMatrixBuilded(): string {
+      if (this.isBuilded === undefined) return "";
+      return this.isBuilded ? "button-main--success" : "button-main--fail";
+    },
+  },
 });
 </script>
 <style scoped>
