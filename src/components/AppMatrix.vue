@@ -44,9 +44,12 @@
           </tr>
         </tbody>
       </table>
-      <button class="build-btn button-main" type="button" @click="buildMatrix">
-        Build matrix
-      </button>
+      <app-matrix-build-btn
+        :cols="cols"
+        :rows="rows"
+        :cells="cells"
+        @build-matrix="handleBuild"
+      />
     </div>
 
     <div class="crit-wrapper">
@@ -73,6 +76,7 @@ import OptimisticCriteria from "./OptimisticCriteria.vue";
 import PCriteria from "./PCriteria.vue";
 import SavageCriteria from "./SavageCriteria.vue";
 import WaldCriteria from "./WaldCriteria.vue";
+import AppMatrixBuildBtn from "./AppMatrixBuildBtn.vue";
 export default defineComponent({
   components: {
     BLCriteria,
@@ -83,31 +87,27 @@ export default defineComponent({
     PCriteria,
     SavageCriteria,
     WaldCriteria,
+    AppMatrixBuildBtn,
   },
   data() {
     return {
-      rows: null,
-      cols: null,
-      cells: new Map(),
+      rows: 0,
+      cols: 0,
       matrix: [],
+      cells: new Map(),
       probabilities: "",
     } as BuilderData;
   },
+
   methods: {
-    buildMatrix() {
+    handleBuild(matrix) {
       const invalidCells = this.getInvalidCells();
       if (invalidCells.length) {
         this.markInvalid(invalidCells);
         return;
       }
-      const orderedCells = [...this.cells.keys()].sort((a, b) => a - b);
-      const orderedCellsValues = orderedCells.map((key) => {
-        const value = this.cells.get(key);
-        return value ? value : 0;
-      });
-      this.matrix = this.buildMatrixRows(orderedCellsValues);
+      this.matrix = matrix;
     },
-
     handleInput({ target }) {
       const cellOrderPath = target.attributes.cell.value;
       const cellValue = target.value;
@@ -115,17 +115,6 @@ export default defineComponent({
       if (target.classList.contains("cell-invalid")) {
         target.classList.remove("cell-invalid");
       }
-    },
-
-    buildMatrixRows<T>(cells: T[]) {
-      const matrix: T[][] = [];
-      if (this.cols) {
-        for (let i = 0; i < cells.length; i += this.cols) {
-          matrix.push(cells.slice(i, i + this.cols));
-        }
-        return matrix;
-      }
-      return matrix;
     },
 
     markInvalid(invalidCells) {
@@ -153,6 +142,15 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   gap: 10%;
+}
+@media (max-width: 500px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cell {
+    width: 1.5rem;
+  }
 }
 .crit-wrapper {
   display: flex;
@@ -187,18 +185,7 @@ export default defineComponent({
 .cell-invalid {
   border: solid 1px red;
 }
-@media (max-width: 500px) {
-  .wrapper {
-    flex-direction: column;
-    align-items: center;
-  }
-  .cell {
-    width: 1.5rem;
-  }
-}
-.build-btn {
-  margin-top: 10px;
-}
+
 .cells-builder {
   display: flex;
   flex-direction: column;
@@ -216,25 +203,5 @@ export default defineComponent({
 }
 /* /matrix */
 
-.button-main {
-  height: 8%;
-  border: solid 1px;
-  background-color: none;
-  border-radius: 10px;
-  margin: 5px;
-  padding: 3px;
-  width: auto;
-  overflow: visible;
-
-  background: transparent;
-
-  color: inherit;
-  font: inherit;
-
-  line-height: normal;
-}
-.button-main:hover {
-  background: rgb(248, 246, 246);
-  transition: background 0.1s ease-in;
-}
+/* main button */
 </style>
