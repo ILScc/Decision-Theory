@@ -9,13 +9,14 @@
   </button>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+
 export default defineComponent({
   props: {
     rows: { type: Number, required: true },
     cols: { type: Number, required: true },
     cells: { type: Object, required: true },
-    isBuilded: { type: Boolean, required: false },
+    isBuilded: { type: Object as PropType<boolean | null>, required: true },
   },
   emits: {
     buildMatrix: null,

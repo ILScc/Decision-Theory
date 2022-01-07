@@ -97,7 +97,7 @@ export default defineComponent({
       matrix: [],
       cells: new Map(),
       probabilities: "",
-      isBuilded: undefined,
+      isBuilded: null,
     } as BuilderData;
   },
 
