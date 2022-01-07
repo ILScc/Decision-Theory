@@ -1,15 +1,15 @@
 <template>
-  <app-matrix></app-matrix>
+  <decision-criterias-calc></decision-criterias-calc>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AppMatrix from "./components/AppMatrix.vue";
+import DecisionCriteriasCalc from "./components/DecisionCriteriasCalc.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    AppMatrix,
+    DecisionCriteriasCalc,
   },
 });
 </script>

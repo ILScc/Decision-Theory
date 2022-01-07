@@ -30,8 +30,8 @@
           >Insert probabilities</label
         >
       </form>
-      <app-matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
-      <app-matrix-build-btn
+      <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
+      <matrix-build-btn
         :cols="cols"
         :rows="rows"
         :cells="cells"
@@ -55,7 +55,7 @@
 <script lang="ts">
 import { BuilderData } from "@/types";
 import { defineComponent } from "vue";
-import AppMatrixBuildBtn from "./AppMatrixBuildBtn.vue";
+import MatrixBuildBtn from "./MatrixBuildBtn.vue";
 import BayesLaplace from "./BayesLaplace.vue";
 import GermeyerCriteria from "./GermeyerCriteria.vue";
 import HurwitzCriteria from "./HurwitzCriteria.vue";
@@ -64,7 +64,7 @@ import PCriteria from "./PCriteria.vue";
 import SavageCriteria from "./SavageCriteria.vue";
 import WaldCriteria from "./WaldCriteria.vue";
 import HodgesLehmann from "./HodgesLehmann.vue";
-import AppMatrixTable from "./AppMatrixTable.vue";
+import MatrixTable from "./MatrixTable.vue";
 
 export default defineComponent({
   components: {
@@ -75,9 +75,9 @@ export default defineComponent({
     PCriteria,
     SavageCriteria,
     WaldCriteria,
-    AppMatrixBuildBtn,
+    MatrixBuildBtn,
     HodgesLehmann,
-    AppMatrixTable,
+    MatrixTable,
   },
   data() {
     return {
