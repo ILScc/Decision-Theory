@@ -44,7 +44,7 @@ export default defineComponent({
   },
   computed: {
     isMatrixBuilded(): string {
-      if (this.isBuilded === undefined) return "";
+      if (this.isBuilded === null) return "";
       return this.isBuilded ? "button-main--success" : "button-main--fail";
     },
   },

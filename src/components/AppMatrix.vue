@@ -30,20 +30,7 @@
           >Insert probabilities</label
         >
       </form>
-      <table class="matrix">
-        <tbody class="matrix" v-if="rows">
-          <tr v-for="row in rows" :key="row">
-            <input
-              class="cell"
-              @change="handleInput"
-              :cell="`${row}${col}`"
-              v-for="col in cols"
-              :key="col"
-              type="number"
-            />
-          </tr>
-        </tbody>
-      </table>
+      <app-matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
       <app-matrix-build-btn
         :cols="cols"
         :rows="rows"
@@ -77,6 +64,7 @@ import PCriteria from "./PCriteria.vue";
 import SavageCriteria from "./SavageCriteria.vue";
 import WaldCriteria from "./WaldCriteria.vue";
 import HodgesLehmann from "./HodgesLehmann.vue";
+import AppMatrixTable from "./AppMatrixTable.vue";
 
 export default defineComponent({
   components: {
@@ -89,6 +77,7 @@ export default defineComponent({
     WaldCriteria,
     AppMatrixBuildBtn,
     HodgesLehmann,
+    AppMatrixTable,
   },
   data() {
     return {
@@ -113,13 +102,8 @@ export default defineComponent({
       this.isBuilded = true;
       this.matrix = matrix;
     },
-    handleInput({ target }) {
-      const cellOrderPath = target.attributes.cell.value;
-      const cellValue = target.value;
-      this.cells.set(+cellOrderPath, +cellValue);
-      if (target.classList.contains("cell-invalid")) {
-        target.classList.remove("cell-invalid");
-      }
+    setCells(cells) {
+      this.cells = cells;
     },
 
     markInvalid(invalidCells) {
@@ -153,9 +137,6 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
   }
-  .cell {
-    width: 1.5rem;
-  }
 }
 .crit-wrapper {
   display: flex;
@@ -165,10 +146,6 @@ export default defineComponent({
   gap: 10px;
 }
 /* matrix */
-.matrix {
-  max-width: 100vw;
-  margin: 5px auto;
-}
 
 .cells-builder__settings {
   width: 80%;
@@ -176,19 +153,6 @@ export default defineComponent({
   margin: 0 auto;
   border: solid 1px #ccc;
   border-radius: 10px;
-}
-.cell {
-  border: solid 1px;
-  border-radius: 4px;
-  margin: 2px;
-  padding: 0;
-  width: 6rem;
-
-  font: inherit;
-  line-height: normal;
-}
-.cell-invalid {
-  border: solid 1px red;
 }
 
 .cells-builder {
