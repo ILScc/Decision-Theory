@@ -1,35 +1,11 @@
 <template>
   <main class="wrapper">
     <div class="matrix-builder">
-      <form class="cells-builder">
-        <input
-          class="cells-builder__settings"
-          type="number"
-          name="rows"
-          v-model.number="rows"
-        />
-        <label class="cells-builder__text" for="rows"
-          >Insert number of rows (decisions)</label
-        >
-        <input
-          class="cells-builder__settings"
-          type="number"
-          name="columns"
-          v-model.number="cols"
-        />
-        <label class="cells-builder__text" for="columns"
-          >Insert number of columns (conditions)</label
-        >
-        <input
-          class="cells-builder__settings"
-          type="text"
-          name="probabilities"
-          v-model="probabilities"
-        />
-        <label class="cells-builder__text" for="probabilities"
-          >Insert probabilities</label
-        >
-      </form>
+      <cells-builder
+        v-model:rows="rows"
+        v-model:cols="cols"
+        v-model:probabilities="probabilities"
+      />
       <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
       <matrix-build-btn
         :cols="cols"
@@ -65,6 +41,7 @@ import SavageCriteria from "./SavageCriteria.vue";
 import WaldCriteria from "./WaldCriteria.vue";
 import HodgesLehmann from "./HodgesLehmann.vue";
 import MatrixTable from "./MatrixTable.vue";
+import CellsBuilder from "./CellsBuilder.vue";
 
 export default defineComponent({
   components: {
@@ -78,6 +55,7 @@ export default defineComponent({
     MatrixBuildBtn,
     HodgesLehmann,
     MatrixTable,
+    CellsBuilder,
   },
   data() {
     return {
@@ -145,32 +123,8 @@ export default defineComponent({
   margin-top: 20px;
   gap: 10px;
 }
-/* matrix */
-
-.cells-builder__settings {
-  width: 80%;
-  height: 25px;
-  margin: 0 auto;
-  border: solid 1px #ccc;
-  border-radius: 10px;
-}
-
-.cells-builder {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-.cells-builder__text {
-  margin: 0 auto;
-}
-.cells-builder input {
-  margin-top: 5px;
-}
 .matrix-builder {
   display: flex;
   flex-direction: column;
 }
-/* /matrix */
-
-/* main button */
 </style>
