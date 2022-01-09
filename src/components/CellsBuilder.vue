@@ -5,7 +5,7 @@
       type="number"
       name="rows"
       :value="rows"
-      @input="$emit('update:rows', +$event.target.value)"
+      @input="$emit('update:rows', +inputHandler($event))"
     />
     <label class="cells-builder__text" for="rows"
       >Insert number of rows (decisions)</label
@@ -15,7 +15,7 @@
       type="number"
       name="columns"
       :value="cols"
-      @input="$emit('update:cols', +$event.target.value)"
+      @input="$emit('update:cols', +inputHandler($event))"
     />
     <label class="cells-builder__text" for="columns"
       >Insert number of columns (conditions)</label
@@ -25,7 +25,7 @@
       type="text"
       name="probabilities"
       :value="probabilities"
-      @input="$emit('update:probabilities', $event.target.value)"
+      @input="$emit('update:probabilities', inputHandler($event))"
     />
     <label class="cells-builder__text" for="probabilities"
       >Insert probabilities</label
@@ -44,6 +44,13 @@ export default defineComponent({
     "update:rows": null,
     "update:cols": null,
     "update:probabilities": null,
+  },
+  methods: {
+    inputHandler(e: Event) {
+      const target = e.target as HTMLInputElement;
+      const targetValue = target.value;
+      return targetValue;
+    },
   },
 });
 </script>
