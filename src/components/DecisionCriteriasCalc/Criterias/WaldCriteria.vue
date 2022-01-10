@@ -1,13 +1,13 @@
 <template>
-  <button class="button-main" type="button" @click="calcOptimistic(matrix)">
-    calcOptimistic
+  <button class="button-main" type="button" @click="calcWald(matrix)">
+    calcWald
   </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { findMinInRows, prettifyOutput } from "../../../DecisonMakingMethods/utils";
 
-import { findMaxInRows, prettifyOutput } from "../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
     return {
@@ -20,12 +20,11 @@ export default defineComponent({
       required: true,
     },
   },
-
   methods: {
-    calcOptimistic(matrix) {
-      const maxInRows = findMaxInRows(matrix);
-      const decision = Math.max(...maxInRows);
-      this.result = prettifyOutput(maxInRows, decision);
+    calcWald(matrix: number[][]) {
+      const minInRows = findMinInRows(matrix);
+      const decision = Math.max(...minInRows);
+      this.result = prettifyOutput(minInRows, decision);
     },
   },
 });

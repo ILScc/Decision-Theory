@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import DecisionCriteriasCalc from "./components/DecisionCriteriasCalc.vue";
+import DecisionCriteriasCalc from "./components/DecisionCriteriasCalc/DecisionCriteriasCalc.vue";
 
 export default defineComponent({
   name: "App",

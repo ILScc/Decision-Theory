@@ -32,14 +32,14 @@
 import { BuilderData } from "@/types";
 import { defineComponent } from "vue";
 import MatrixBuildBtn from "./MatrixBuildBtn.vue";
-import BayesLaplace from "./BayesLaplace.vue";
-import GermeyerCriteria from "./GermeyerCriteria.vue";
-import HurwitzCriteria from "./HurwitzCriteria.vue";
-import OptimisticCriteria from "./OptimisticCriteria.vue";
-import PCriteria from "./PCriteria.vue";
-import SavageCriteria from "./SavageCriteria.vue";
-import WaldCriteria from "./WaldCriteria.vue";
-import HodgesLehmann from "./HodgesLehmann.vue";
+import BayesLaplace from "./Criterias/BayesLaplace.vue";
+import GermeyerCriteria from "./Criterias/GermeyerCriteria.vue";
+import HurwitzCriteria from "./Criterias/HurwitzCriteria.vue";
+import OptimisticCriteria from "./Criterias/OptimisticCriteria.vue";
+import PCriteria from "./Criterias/PCriteria.vue";
+import SavageCriteria from "./Criterias/SavageCriteria.vue";
+import WaldCriteria from "./Criterias/WaldCriteria.vue";
+import HodgesLehmann from "./Criterias/HodgesLehmann.vue";
 import MatrixTable from "./MatrixTable.vue";
 import CellsBuilder from "./CellsBuilder.vue";
 

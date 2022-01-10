@@ -2,22 +2,21 @@
   <button
     class="button-main"
     type="button"
-    @click="calcHL(matrix, probabilities)"
+    @click="calcHurwitz(matrix, lambda)"
   >
-    calcHL
+    calcHurwitz
   </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent,PropType } from "vue";
 
 import {
   getLambda,
   findMinInRows,
-  sumMathProbabilities,
+  findMaxInRows,
   prettifyOutput,
-  convertProbabilities,
-} from "../DecisonMakingMethods/utils";
+} from "../../../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
     return {
@@ -30,23 +29,16 @@ export default defineComponent({
       type: Object as PropType<number[][]>,
       required: true,
     },
-    probabilities: {
-      type: String,
-      required: true,
-    },
   },
-
   methods: {
-    calcHL(matrix: number[][], probabilities: string, lambda = 0.5) {
-      const convertedProbabilities = convertProbabilities(probabilities);
-      const lambdaMathProbabilities = sumMathProbabilities(
-        matrix,
-        convertedProbabilities
-      ).map((value) => lambda * value);
+    calcHurwitz(matrix: number[][], lambda = 0.5) {
       const lambdaMinInRows = findMinInRows(matrix).map(
-        (value) => (1 - Number(lambda.toFixed(1))) * value
+        (value) => value * lambda
       );
-      const options = lambdaMathProbabilities.map(
+      const lambdaMaxInRows = findMaxInRows(matrix).map(
+        (value) => Number((1 - lambda).toFixed(1)) * value
+      );
+      const options = lambdaMaxInRows.map(
         (value, i) => value + lambdaMinInRows[i]
       );
       const decision = Math.max(...options);

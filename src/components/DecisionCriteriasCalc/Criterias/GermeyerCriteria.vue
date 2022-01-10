@@ -2,9 +2,9 @@
   <button
     class="button-main"
     type="button"
-    @click="calcBL(matrix, probabilities)"
+    @click="calcGermeyer(matrix, probabilities)"
   >
-    calcBL
+    calcGermeyer
   </button>
   <div>{{ result }}</div>
 </template>
@@ -12,10 +12,13 @@
 import { defineComponent, PropType } from "vue";
 
 import {
-  sumMathProbabilities,
+  isOnlyPositiveMatrix,
+  handleGermeyerValidMatrix,
+  handleGermeyerInvalidMatrix,
   prettifyOutput,
   convertProbabilities,
-} from "../DecisonMakingMethods/utils";
+} from "../../../DecisonMakingMethods/utils";
+
 export default defineComponent({
   data() {
     return {
@@ -32,16 +35,15 @@ export default defineComponent({
       required: true,
     },
   },
-
   methods: {
-    calcBL(matrix: number[][], probabilities: string) {
+    calcGermeyer(matrix: number[][], probabilities: string) {
       const convertedProbabilities = convertProbabilities(probabilities);
-      const mathProbabilities = sumMathProbabilities(
-        matrix,
-        convertedProbabilities
-      );
-      const decision = Math.max(...mathProbabilities);
-      this.result = prettifyOutput(mathProbabilities, decision);
+      const isMatrixValid = !isOnlyPositiveMatrix(matrix);
+      const minValueMathProbs = isMatrixValid
+        ? handleGermeyerValidMatrix(matrix, convertedProbabilities)
+        : handleGermeyerInvalidMatrix(matrix, convertedProbabilities);
+      const decision = Math.max(...minValueMathProbs);
+      this.result = prettifyOutput(minValueMathProbs, decision);
     },
   },
 });

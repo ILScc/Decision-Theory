@@ -12,7 +12,7 @@ import {
   handlePCriterionValidMatrix,
   handlePCriterionInvalidMatrix,
   prettifyOutput,
-} from "../DecisonMakingMethods/utils";
+} from "../../../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
     return {

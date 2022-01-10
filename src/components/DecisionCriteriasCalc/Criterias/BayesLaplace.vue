@@ -1,32 +1,47 @@
 <template>
-  <button class="button-main" type="button" @click="calcSavage(matrix)">
-    calcSavage
+  <button
+    class="button-main"
+    type="button"
+    @click="calcBL(matrix, probabilities)"
+  >
+    calcBL
   </button>
   <div>{{ result }}</div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { buildRiskMatrix, prettifyOutput } from "../DecisonMakingMethods/utils";
+import {
+  sumMathProbabilities,
+  prettifyOutput,
+  convertProbabilities,
+} from "../../../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
     return {
       result: "",
     };
   },
-
   props: {
     matrix: {
       type: Object as PropType<number[][]>,
       required: true,
     },
+    probabilities: {
+      type: String,
+      required: true,
+    },
   },
+
   methods: {
-    calcSavage(matrix: number[][]) {
-      const riskMatrix = buildRiskMatrix(matrix);
-      const maxRisks = riskMatrix.map((row) => Math.max(...row));
-      const decision = Math.min(...maxRisks);
-      this.result = prettifyOutput(maxRisks, decision);
+    calcBL(matrix: number[][], probabilities: string) {
+      const convertedProbabilities = convertProbabilities(probabilities);
+      const mathProbabilities = sumMathProbabilities(
+        matrix,
+        convertedProbabilities
+      );
+      const decision = Math.max(...mathProbabilities);
+      this.result = prettifyOutput(mathProbabilities, decision);
     },
   },
 });
