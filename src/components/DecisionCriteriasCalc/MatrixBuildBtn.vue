@@ -16,7 +16,8 @@ export default defineComponent({
     rows: { type: Number, required: true },
     cols: { type: Number, required: true },
     cells: { type: Object, required: true },
-    isBuilded: { type: Object as PropType<boolean | null>, required: false },
+    probabilities: { type: Object as PropType<number[]>, required: true },
+    isBuilded: { type: Boolean as PropType<boolean | null>, required: false },
   },
   emits: {
     buildMatrix: null,

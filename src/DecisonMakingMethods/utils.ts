@@ -44,8 +44,7 @@ export const getLambda = () => {
   return Number.parseFloat(((random() * 11) % 1).toFixed(1));
 };
 
-export const convertProbabilities = (probabilities: string) =>
-  probabilities.split(",").map((p) => +p);
+
 
 export const buildRiskMatrix = (matrix: number[][]) => {
   const maxInCols = calcMaxInColumns(matrix);

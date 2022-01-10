@@ -14,7 +14,6 @@ import { defineComponent, PropType } from "vue";
 import {
   sumMathProbabilities,
   prettifyOutput,
-  convertProbabilities,
 } from "../../../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
@@ -28,17 +27,16 @@ export default defineComponent({
       required: true,
     },
     probabilities: {
-      type: String,
+      type:  Object as PropType<number[]>,
       required: true,
     },
   },
 
   methods: {
-    calcBL(matrix: number[][], probabilities: string) {
-      const convertedProbabilities = convertProbabilities(probabilities);
+    calcBL(matrix: number[][], probabilities: number[]) {
       const mathProbabilities = sumMathProbabilities(
         matrix,
-        convertedProbabilities
+        probabilities
       );
       const decision = Math.max(...mathProbabilities);
       this.result = prettifyOutput(mathProbabilities, decision);

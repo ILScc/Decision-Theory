@@ -25,7 +25,7 @@
       type="text"
       name="probabilities"
       :value="probabilities"
-      @input="$emit('update:probabilities', inputHandler($event))"
+      @blur="validateProbabilities($event)"
     />
     <label class="cells-builder__text" for="probabilities"
       >Insert probabilities</label
@@ -33,12 +33,13 @@
   </form>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+//TODO: reset value on focus
+import { defineComponent, PropType } from "vue";
 export default defineComponent({
   props: {
     rows: Number,
     cols: Number,
-    probabilities: String,
+    probabilities: Object as PropType<number[]>,
   },
   emits: {
     "update:rows": null,
@@ -50,6 +51,17 @@ export default defineComponent({
       const target = e.target as HTMLInputElement;
       const targetValue = target.value;
       return targetValue;
+    },
+    validateProbabilities(value) {
+      const probabilities = this.inputHandler(value);
+      console.log(probabilities);
+      const convertedProbabilities = probabilities.split(",").map((p) => +p);
+      const result =
+        convertedProbabilities.reduce((prev, cur) => prev + cur) <= 1
+          ? convertedProbabilities
+          : NaN;
+
+      this.$emit("update:probabilities", result);
     },
   },
 });

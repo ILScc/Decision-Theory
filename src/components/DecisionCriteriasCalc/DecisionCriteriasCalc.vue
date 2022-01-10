@@ -11,6 +11,7 @@
         :cols="cols"
         :rows="rows"
         :cells="cells"
+        :probabilities="probabilities"
         :isBuilded="isBuilded"
         @build-matrix="handleBuild"
       />
@@ -63,7 +64,7 @@ export default defineComponent({
       cols: 0,
       matrix: [],
       cells: new Map(),
-      probabilities: "",
+      probabilities: [],
       isBuilded: null,
     } as BuilderData;
   },
@@ -95,7 +96,6 @@ export default defineComponent({
       const invalidCells: HTMLInputElement[] = [];
       for (let i = 0; i < cells.length; i++) {
         if (cells[i].value === "") {
-          console.log(cells[i]);
           invalidCells.push(cells[i]);
         }
       }

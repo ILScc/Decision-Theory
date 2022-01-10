@@ -16,7 +16,6 @@ import {
   findMinInRows,
   sumMathProbabilities,
   prettifyOutput,
-  convertProbabilities,
 } from "../../../DecisonMakingMethods/utils";
 export default defineComponent({
   data() {
@@ -31,17 +30,16 @@ export default defineComponent({
       required: true,
     },
     probabilities: {
-      type: String,
+      type: Object as PropType<number[]>,
       required: true,
     },
   },
 
   methods: {
-    calcHL(matrix: number[][], probabilities: string, lambda = 0.5) {
-      const convertedProbabilities = convertProbabilities(probabilities);
+    calcHL(matrix: number[][], probabilities: number[], lambda = 0.5) {
       const lambdaMathProbabilities = sumMathProbabilities(
         matrix,
-        convertedProbabilities
+        probabilities
       ).map((value) => lambda * value);
       const lambdaMinInRows = findMinInRows(matrix).map(
         (value) => (1 - Number(lambda.toFixed(1))) * value

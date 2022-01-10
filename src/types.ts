@@ -3,6 +3,6 @@ export interface BuilderData {
   cols: number;
   matrix: number[][];
   cells: Map<number, number>;
-  probabilities: string;
+  probabilities: number[];
   isBuilded: boolean | null;
 }

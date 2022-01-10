@@ -16,7 +16,6 @@ import {
   handleGermeyerValidMatrix,
   handleGermeyerInvalidMatrix,
   prettifyOutput,
-  convertProbabilities,
 } from "../../../DecisonMakingMethods/utils";
 
 export default defineComponent({
@@ -31,17 +30,16 @@ export default defineComponent({
       required: true,
     },
     probabilities: {
-      type: String,
+      type: Object as PropType<number[]>,
       required: true,
     },
   },
   methods: {
-    calcGermeyer(matrix: number[][], probabilities: string) {
-      const convertedProbabilities = convertProbabilities(probabilities);
+    calcGermeyer(matrix: number[][], probabilities: number[]) {
       const isMatrixValid = !isOnlyPositiveMatrix(matrix);
       const minValueMathProbs = isMatrixValid
-        ? handleGermeyerValidMatrix(matrix, convertedProbabilities)
-        : handleGermeyerInvalidMatrix(matrix, convertedProbabilities);
+        ? handleGermeyerValidMatrix(matrix, probabilities)
+        : handleGermeyerInvalidMatrix(matrix, probabilities);
       const decision = Math.max(...minValueMathProbs);
       this.result = prettifyOutput(minValueMathProbs, decision);
     },
