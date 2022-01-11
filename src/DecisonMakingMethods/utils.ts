@@ -21,9 +21,6 @@ const calcMaxInColumns = (matrix: number[][]) => {
   return maxInColumns;
 };
 
-const multiplyRowsValues = (matrix: number[][]) =>
-  matrix.map((row) => row.reduce((value, nexValue) => value * nexValue));
-
 const getOnlyNegativeMatrix = (matrix: number[][]) => {
   const maxMatrixValue = max(...findMaxInRows(matrix));
   const onlyNegativeMatrix = matrix.map((row) =>
@@ -36,15 +33,13 @@ const findMinRowProbability = (matrix: number[][], probabilities: number[]) => {
   const matrixOfMathProbs = matrix.map((row) =>
     row.map((value, i) => value * probabilities[i])
   );
-  const minRowProbability = matrixOfMathProbs.map((row) => min(...row));
-  return minRowProbability;
+  const minRowProbabilities = matrixOfMathProbs.map((row) => min(...row));
+  return minRowProbabilities;
 };
 
 export const getLambda = () => {
   return Number.parseFloat(((random() * 11) % 1).toFixed(1));
 };
-
-
 
 export const buildRiskMatrix = (matrix: number[][]) => {
   const maxInCols = calcMaxInColumns(matrix);
@@ -97,6 +92,9 @@ const getOnlyPositiveMatrix = (matrix: number[][]) => {
 export const isOnlyPositiveMatrix = (matrix: number[][]) =>
   matrix.every((row) => row.every((value) => value >= 0));
 
+const multiplyRowsValues = (matrix: number[][]) =>
+  matrix.map((row) => row.reduce((value, nexValue) => value * nexValue));
+
 export const handlePCriterionValidMatrix = (matrix: number[][]) => {
   const rowMultiplications = multiplyRowsValues(matrix);
   return rowMultiplications;
@@ -111,17 +109,17 @@ export const handleGermeyerValidMatrix = (
   matrix: number[][],
   probabilities: number[]
 ) => {
-  const worstRowProbability = findMinRowProbability(matrix, probabilities);
-  return worstRowProbability;
+  const minRowProbabilities = findMinRowProbability(matrix, probabilities);
+  return minRowProbabilities;
 };
 export const handleGermeyerInvalidMatrix = (
   matrix: number[][],
   probabilities: number[]
 ) => {
   const onlyNegativeMatrix = getOnlyNegativeMatrix(matrix);
-  const minRowProbability = findMinRowProbability(
+  const minRowProbabilities = findMinRowProbability(
     onlyNegativeMatrix,
     probabilities
   );
-  return minRowProbability;
+  return minRowProbabilities;
 };
