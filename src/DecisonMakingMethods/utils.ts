@@ -29,9 +29,9 @@ const getOnlyNegativeMatrix = (matrix: number[][]) => {
   return onlyNegativeMatrix;
 };
 
-const findMinRowProbability = (matrix: number[][], probabilities: number[]) => {
+const findMinRowsProbabilities = (matrix: number[][], probabilities: number[]) => {
   const matrixOfMathProbs = matrix.map((row) =>
-    row.map((value, i) => value * probabilities[i])
+    row.map((value, i) => +(value * probabilities[i]).toFixed(1))
   );
   const minRowProbabilities = matrixOfMathProbs.map((row) => min(...row));
   return minRowProbabilities;
@@ -109,7 +109,7 @@ export const handleGermeyerValidMatrix = (
   matrix: number[][],
   probabilities: number[]
 ) => {
-  const minRowProbabilities = findMinRowProbability(matrix, probabilities);
+  const minRowProbabilities = findMinRowsProbabilities(matrix, probabilities);
   return minRowProbabilities;
 };
 export const handleGermeyerInvalidMatrix = (
@@ -117,7 +117,7 @@ export const handleGermeyerInvalidMatrix = (
   probabilities: number[]
 ) => {
   const onlyNegativeMatrix = getOnlyNegativeMatrix(matrix);
-  const minRowProbabilities = findMinRowProbability(
+  const minRowProbabilities = findMinRowsProbabilities(
     onlyNegativeMatrix,
     probabilities
   );
