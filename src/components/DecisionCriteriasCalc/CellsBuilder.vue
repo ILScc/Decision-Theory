@@ -5,7 +5,7 @@
       type="number"
       name="rows"
       :value="rows"
-      @input="$emit('update:rows', +inputHandler($event))"
+      @input="$emit('update:rows', +getInputValue($event))"
     />
     <label class="cells-builder__text" for="rows"
       >Insert number of rows (decisions)</label
@@ -15,7 +15,7 @@
       type="number"
       name="columns"
       :value="cols"
-      @input="$emit('update:cols', +inputHandler($event))"
+      @input="$emit('update:cols', +getInputValue($event))"
     />
     <label class="cells-builder__text" for="columns"
       >Insert number of columns (conditions)</label
@@ -25,43 +25,74 @@
       type="text"
       name="probabilities"
       :value="probabilities"
-      @blur="validateProbabilities($event)"
+      @blur="handleProbsInput($event)"
     />
     <label class="cells-builder__text" for="probabilities"
       >Insert probabilities</label
     >
+    <div v-if="!isProbsSumEqualOne && !initialValue">
+      Probabilities sum must be equal 1
+    </div>
+    <div v-if="!isProbsLengthValid && !initialValue">
+      Number of inserted probabilities must be equal cols
+    </div>
   </form>
 </template>
 <script lang="ts">
 //TODO: reset value on focus
+//TODO: replace v-if with list of options and choose between them
 import { defineComponent, PropType } from "vue";
 export default defineComponent({
+  data() {
+    return {
+      initialValue: true,
+    };
+  },
   props: {
-    rows: Number,
-    cols: Number,
-    probabilities: Object as PropType<number[]>,
+    rows: { type: Number, required: true },
+    cols: { type: Number, required: true },
+    probabilities: { type: Object as PropType<number[]>, required: true },
   },
   emits: {
     "update:rows": null,
     "update:cols": null,
     "update:probabilities": null,
+    "validation-success": null,
   },
   methods: {
-    inputHandler(e: Event) {
+    getInputValue(e: Event) {
       const target = e.target as HTMLInputElement;
       const targetValue = target.value;
       return targetValue;
     },
-    validateProbabilities(value) {
-      const probabilities = this.inputHandler(value);
-      console.log(probabilities);
-      const convertedProbabilities = probabilities.split(",").map((p) => +p);
-      const result =
-        convertedProbabilities.reduce((prev, cur) => prev + cur) <= 1
-          ? convertedProbabilities
-          : NaN;
+    handleProbsInput(value) {
+      const probabilities = this.getInputValue(value);
+      if (!probabilities) {
+        this.initialValue = true;
+        return;
+      }
+      this.initialValue = false;
+      this.updateProbs(probabilities);
+      if (this.areProbsValid) {
+        this.$emit("validation-success");
+      }
+    },
+    updateProbs(probs) {
+      const convertedProbabilities = probs.split(",").map((p) => +p);
+      this.$emit("update:probabilities", convertedProbabilities);
+    },
+  },
+  computed: {
+    areProbsValid() {
+      return this.isProbsLengthValid && this.isProbsSumEqualOne;
+    },
+    isProbsLengthValid() {
+      return this.probabilities.length === this.cols;
+    },
 
-      this.$emit("update:probabilities", result);
+    isProbsSumEqualOne() {
+      const probsSum = this.probabilities.reduce((prev, cur) => prev + cur, 0);
+      return probsSum === 1;
     },
   },
 });

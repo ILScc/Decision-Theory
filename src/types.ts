@@ -5,4 +5,5 @@ export interface BuilderData {
   cells: Map<number, number>;
   probabilities: number[];
   isBuilded: boolean | null;
+  probsValid: boolean
 }

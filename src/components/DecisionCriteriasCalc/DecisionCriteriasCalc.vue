@@ -5,6 +5,7 @@
         v-model:rows="rows"
         v-model:cols="cols"
         v-model:probabilities="probabilities"
+        @validation-success="probsValid = true"
       />
       <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
       <matrix-build-btn
@@ -66,12 +67,13 @@ export default defineComponent({
       cells: new Map(),
       probabilities: [],
       isBuilded: null,
+      probsValid: false,
     } as BuilderData;
   },
 
   methods: {
     handleBuild(matrix) {
-      if (!this.cols || !this.rows) return;
+      if (!this.cols || !this.rows || !this.probsValid) return;
       const invalidCells = this.getInvalidCells();
       if (invalidCells.length) {
         this.markInvalid(invalidCells);
