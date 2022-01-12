@@ -32,16 +32,21 @@
     <label class="cells-builder__text" for="probabilities"
       >Insert probabilities</label
     >
-    <div v-if="!isProbsSumEqualOne && !initialValue">
+    <div
+      class="cells-bulder__warning"
+      v-if="!isProbsSumEqualOne && !initialValue"
+    >
       Probabilities sum must be equal 1
     </div>
-    <div v-if="!isProbsLengthValid && !initialValue">
+    <div
+      class="cells-bulder__warning"
+      v-if="!isProbsLengthValid && !initialValue"
+    >
       Number of inserted probabilities must be equal cols
     </div>
   </form>
 </template>
 <script lang="ts">
-//TODO: replace v-if with list of options and choose between them
 import { defineComponent, PropType } from "vue";
 export default defineComponent({
   data() {
@@ -100,6 +105,11 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.cells-builder {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
 .cells-builder__settings {
   width: 80%;
   height: 25px;
@@ -108,15 +118,15 @@ export default defineComponent({
   border-radius: 10px;
 }
 
-.cells-builder {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
 .cells-builder__text {
   margin: 0 auto;
 }
 .cells-builder input {
   margin-top: 5px;
+}
+.cells-bulder__warning {
+  margin-top: 5px;
+  color: tomato;
+  align-self: center;
 }
 </style>
