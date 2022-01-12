@@ -6,6 +6,7 @@
       name="rows"
       :value="rows"
       @input="$emit('update:rows', +getInputValue($event))"
+      @focus="resetValue($event)"
     />
     <label class="cells-builder__text" for="rows"
       >Insert number of rows (decisions)</label
@@ -16,6 +17,7 @@
       name="columns"
       :value="cols"
       @input="$emit('update:cols', +getInputValue($event))"
+      @focus="resetValue($event)"
     />
     <label class="cells-builder__text" for="columns"
       >Insert number of columns (conditions)</label
@@ -39,7 +41,6 @@
   </form>
 </template>
 <script lang="ts">
-//TODO: reset value on focus
 //TODO: replace v-if with list of options and choose between them
 import { defineComponent, PropType } from "vue";
 export default defineComponent({
@@ -62,15 +63,12 @@ export default defineComponent({
   methods: {
     getInputValue(e: Event) {
       const target = e.target as HTMLInputElement;
-      const targetValue = target.value;
-      return targetValue;
+      return target.value;
     },
     handleProbsInput(value) {
       const probabilities = this.getInputValue(value);
-      if (!probabilities) {
-        this.initialValue = true;
-        return;
-      }
+      if (!probabilities) this.initialValue = true;
+
       this.initialValue = false;
       this.updateProbs(probabilities);
       if (this.areProbsValid) {
@@ -80,6 +78,10 @@ export default defineComponent({
     updateProbs(probs) {
       const convertedProbabilities = probs.split(",").map((p) => +p);
       this.$emit("update:probabilities", convertedProbabilities);
+    },
+    resetValue(e: Event) {
+      const target = e.target as HTMLInputElement;
+      target.value = !+target.value ? "" : target.value;
     },
   },
   computed: {
