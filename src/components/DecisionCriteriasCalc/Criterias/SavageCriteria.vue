@@ -1,56 +1,56 @@
 <template>
-  <button class="button-main" type="button" @click="calcSavage(matrix)">
-    calcSavage
-  </button>
-  <div>{{ result }}</div>
+    <button class="button-main" type="button" @click="calcSavage(matrix)">
+        calcSavage
+    </button>
+    <div>{{ result }}</div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { buildRiskMatrix, prettifyOutput } from "../../../DecisonMakingMethods/utils";
+import { buildRiskMatrix, prettifyOutput } from "../criteriasUtils";
 export default defineComponent({
-  data() {
-    return {
-      result: "",
-    };
-  },
+    data() {
+        return {
+            result: "",
+        };
+    },
 
-  props: {
-    matrix: {
-      type: Object as PropType<number[][]>,
-      required: true,
+    props: {
+        matrix: {
+            type: Object as PropType<number[][]>,
+            required: true,
+        },
     },
-  },
-  methods: {
-    calcSavage(matrix: number[][]) {
-      const riskMatrix = buildRiskMatrix(matrix);
-      const maxRisks = riskMatrix.map((row) => Math.max(...row));
-      const decision = Math.min(...maxRisks);
-      this.result = prettifyOutput(maxRisks, decision);
+    methods: {
+        calcSavage(matrix: number[][]) {
+            const riskMatrix = buildRiskMatrix(matrix);
+            const maxRisks = riskMatrix.map((row) => Math.max(...row));
+            const decision = Math.min(...maxRisks);
+            this.result = prettifyOutput(maxRisks, decision);
+        },
     },
-  },
 });
 </script>
 <style scoped>
 .button-main {
-  height: 8%;
-  border: solid 1px;
-  background-color: none;
-  border-radius: 10px;
-  margin: 0;
-  padding: 3px;
-  width: auto;
-  overflow: visible;
+    height: 8%;
+    border: solid 1px;
+    background-color: none;
+    border-radius: 10px;
+    margin: 0;
+    padding: 3px;
+    width: auto;
+    overflow: visible;
 
-  background: transparent;
+    background: transparent;
 
-  color: inherit;
-  font: inherit;
+    color: inherit;
+    font: inherit;
 
-  line-height: normal;
+    line-height: normal;
 }
 .button-main:hover {
-  background: rgb(248, 246, 246);
-  transition: background 0.1s ease-in;
+    background: rgb(248, 246, 246);
+    transition: background 0.1s ease-in;
 }
 </style>

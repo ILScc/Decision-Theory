@@ -9,7 +9,7 @@ import {
   handlePCriterionInvalidMatrix,
   handleGermeyerValidMatrix,
   handleGermeyerInvalidMatrix,
-} from "../DecisonMakingMethods/utils";
+} from "../components/DecisionCriteriasCalc/criteriasUtils";
 describe("test utils", () => {
   describe("should work with standart matrices", () => {
     const matrixWOnlyPosVals = [
