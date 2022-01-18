@@ -52,6 +52,8 @@ export default defineComponent({
     data() {
         return {
             initialValue: true,
+            isProbsLengthValid: false,
+            isProbsSumEqualOne: false,
         };
     },
     props: {
@@ -63,7 +65,7 @@ export default defineComponent({
         "update:rows": null,
         "update:cols": null,
         "update:probabilities": null,
-        "validation-success": null,
+        validation: null,
     },
     methods: {
         getInputValue(e: Event) {
@@ -74,34 +76,32 @@ export default defineComponent({
             const probabilities = this.getInputValue(value);
             if (!probabilities) this.initialValue = true;
             this.initialValue = false;
-            this.$emit("validation-success", this.areProbsValid);
             this.updateProbs(probabilities);
         },
         updateProbs(probs) {
             const convertedProbabilities = probs.split(",").map((p) => +p);
+            const areProbsValid =
+                this.calcProbsLength(convertedProbabilities, this.cols) &&
+                this.calcProbsSum(convertedProbabilities)
+                    ? true
+                    : false;
+            this.$emit("validation", areProbsValid);
             this.$emit("update:probabilities", convertedProbabilities);
         },
         resetValue(e: Event) {
             const target = e.target as HTMLInputElement;
             target.value = !+target.value ? "" : target.value;
         },
-    },
-    computed: {
-        areProbsValid() {
-            return this.isProbsLengthValid && this.isProbsSumEqualOne;
+        calcProbsLength(probs, cols) {
+            const isEqual = probs.length === cols;
+            this.isProbsLengthValid = isEqual;
+            return isEqual;
         },
-        isProbsLengthValid() {
-            console.log(this.probabilities.length === this.cols);
-            return this.probabilities.length === this.cols;
-        },
-
-        isProbsSumEqualOne() {
-            const probsSum = this.probabilities.reduce(
-                (prev, cur) => prev + cur,
-                0
-            );
-            console.log(probsSum);
-            return probsSum === 1;
+        calcProbsSum(probs) {
+            const probsSum = probs.reduce((prev, cur) => prev + cur, 0);
+            const isEqualOne = probsSum === 1;
+            this.isProbsSumEqualOne = isEqualOne;
+            return isEqualOne;
         },
     },
 });
