@@ -1,34 +1,37 @@
 <template>
-  <main class="wrapper">
-    <div class="matrix-builder">
-      <cells-builder
-        v-model:rows="rows"
-        v-model:cols="cols"
-        v-model:probabilities="probabilities"
-        @validation-success="probsValid = true"
-      />
-      <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
-      <matrix-build-btn
-        :cols="cols"
-        :rows="rows"
-        :cells="cells"
-        :probabilities="probabilities"
-        :isBuilded="isBuilded"
-        @build-matrix="handleBuild"
-      />
-    </div>
+    <main class="wrapper">
+        <div class="matrix-builder">
+            <cells-builder
+                v-model:rows="rows"
+                v-model:cols="cols"
+                v-model:probabilities="probabilities"
+                @validation-success="setPropsValid"
+            />
+            <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
+            <matrix-build-btn
+                :cols="cols"
+                :rows="rows"
+                :cells="cells"
+                :probabilities="probabilities"
+                :isBuilded="isBuilded"
+                @build-matrix="handleBuild"
+            />
+        </div>
 
-    <div class="crit-wrapper">
-      <bayes-laplace :matrix="matrix" :probabilities="probabilities" />
-      <germeyer-criteria :matrix="matrix" :probabilities="probabilities" />
-      <hodges-lehmann :matrix="matrix" :probabilities="probabilities" />
-      <hurwitz-criteria :matrix="matrix" />
-      <optimistic-criteria :matrix="matrix" />
-      <p-criteria :matrix="matrix" />
-      <savage-criteria :matrix="matrix" />
-      <wald-criteria :matrix="matrix" />
-    </div>
-  </main>
+        <div class="crit-wrapper">
+            <bayes-laplace :matrix="matrix" :probabilities="probabilities" />
+            <germeyer-criteria
+                :matrix="matrix"
+                :probabilities="probabilities"
+            />
+            <hodges-lehmann :matrix="matrix" :probabilities="probabilities" />
+            <hurwitz-criteria :matrix="matrix" />
+            <optimistic-criteria :matrix="matrix" />
+            <p-criteria :matrix="matrix" />
+            <savage-criteria :matrix="matrix" />
+            <wald-criteria :matrix="matrix" />
+        </div>
+    </main>
 </template>
 <script lang="ts">
 import { BuilderData } from "@/types";
@@ -46,87 +49,74 @@ import MatrixTable from "./MatrixTable.vue";
 import CellsBuilder from "./CellsBuilder.vue";
 
 export default defineComponent({
-  components: {
-    BayesLaplace,
-    GermeyerCriteria,
-    HurwitzCriteria,
-    OptimisticCriteria,
-    PCriteria,
-    SavageCriteria,
-    WaldCriteria,
-    MatrixBuildBtn,
-    HodgesLehmann,
-    MatrixTable,
-    CellsBuilder,
-  },
-  data() {
-    return {
-      rows: 0,
-      cols: 0,
-      matrix: [],
-      cells: new Map(),
-      probabilities: [],
-      isBuilded: null,
-      probsValid: false,
-    } as BuilderData;
-  },
-
-  methods: {
-    handleBuild(matrix) {
-      if (!this.cols || !this.rows || !this.probsValid) return;
-      const invalidCells = this.getInvalidCells();
-      if (invalidCells.length) {
-        this.markInvalid(invalidCells);
-        this.isBuilded = false;
-        return;
-      }
-      this.isBuilded = true;
-      this.matrix = matrix;
+    components: {
+        BayesLaplace,
+        GermeyerCriteria,
+        HurwitzCriteria,
+        OptimisticCriteria,
+        PCriteria,
+        SavageCriteria,
+        WaldCriteria,
+        MatrixBuildBtn,
+        HodgesLehmann,
+        MatrixTable,
+        CellsBuilder,
     },
-    setCells(cells) {
-      this.cells = cells;
+    data() {
+        return {
+            rows: 0,
+            cols: 0,
+            matrix: [],
+            cells: new Map(),
+            probabilities: [],
+            isBuilded: null,
+            probsValid: false,
+        } as BuilderData;
     },
 
-    markInvalid(invalidCells) {
-      invalidCells.forEach((cell) => cell.classList.add("cell-invalid"));
+    methods: {
+        handleBuild(matrix) {
+            console.log(this.cols, this.rows, this.probsValid);
+            if (!this.cols || !this.rows || !this.probsValid) return;
+            console.log(this.cells);
+            if ([...this.cells.values()].includes(0)) {
+                this.isBuilded = false;
+                return;
+            }
+            this.isBuilded = true;
+            this.matrix = matrix;
+        },
+        setCells(cells) {
+            this.cells = cells;
+        },
+        setPropsValid(v) {
+            this.probsValid = v;
+            console.log("main", this.probsValid);
+        },
     },
-
-    getInvalidCells() {
-      const cells = document.getElementsByClassName(
-        "cell" // eslint-disable-next-line no-undef
-      ) as HTMLCollectionOf<HTMLInputElement>;
-      const invalidCells: HTMLInputElement[] = [];
-      for (let i = 0; i < cells.length; i++) {
-        if (cells[i].value === "") {
-          invalidCells.push(cells[i]);
-        }
-      }
-      return invalidCells;
-    },
-  },
 });
 </script>
 <style scoped>
 .wrapper {
-  display: flex;
-  justify-content: center;
-  gap: 10%;
+    display: flex;
+    justify-content: center;
+    gap: 10%;
 }
 @media (max-width: 500px) {
-  .wrapper {
-    flex-direction: column;
-    align-items: center;
-  }
+    .wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .crit-wrapper {
-  display: flex;
-  flex-direction: column;
-  max-width: 50%;
-  margin-top: 20px;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    margin-top: 20px;
+    gap: 10px;
 }
 .matrix-builder {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 </style>
