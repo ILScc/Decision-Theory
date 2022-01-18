@@ -5,7 +5,7 @@
                 v-model:rows="rows"
                 v-model:cols="cols"
                 v-model:probabilities="probabilities"
-                @validation-success="setPropsValid"
+                @validation="setIsValid"
             />
             <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
             <matrix-build-btn
@@ -76,10 +76,11 @@ export default defineComponent({
 
     methods: {
         handleBuild(matrix) {
-            console.log(this.cols, this.rows, this.probsValid);
-            if (!this.cols || !this.rows || !this.probsValid) return;
-            console.log(this.cells);
-            if ([...this.cells.values()].includes(0)) {
+            if (!this.cols || !this.rows || !this.probsValid) {
+                this.isBuilded = false;
+                return;
+            }
+            if (this.cells.size !== this.rows * this.cols) {
                 this.isBuilded = false;
                 return;
             }
@@ -89,9 +90,8 @@ export default defineComponent({
         setCells(cells) {
             this.cells = cells;
         },
-        setPropsValid(v) {
+        setIsValid(v) {
             this.probsValid = v;
-            console.log("main", this.probsValid);
         },
     },
 });

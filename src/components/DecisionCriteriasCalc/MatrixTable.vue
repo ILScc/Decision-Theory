@@ -39,32 +39,18 @@ export default defineComponent({
             const cellOrder = target.attributes.cell.value;
             const cellValue = target.value;
 
-            this.cells.set(+cellOrder, +cellValue);
             if (cellValue === "") {
+                this.cells.delete(+cellOrder);
                 target.classList.add("cell-invalid");
                 return;
             }
+            this.cells.set(+cellOrder, +cellValue);
+
             if (target.classList.contains("cell-invalid")) {
                 target.classList.remove("cell-invalid");
             }
             this.$emit("setCells", this.cells);
         },
-        markInvalid(invalidCells) {
-            invalidCells.forEach((cell) => cell.classList.add("cell-invalid"));
-        },
-
-        // getInvalidCells() {
-        //     const cells = document.getElementsByClassName(
-        //         "cell" // eslint-disable-next-line no-undef
-        //     ) as HTMLCollectionOf<HTMLInputElement>;
-        //     const invalidCells: HTMLInputElement[] = [];
-        //     for (let i = 0; i < cells.length; i++) {
-        //         if (cells[i].value === "") {
-        //             invalidCells.push(cells[i]);
-        //         }
-        //     }
-        //     return invalidCells;
-        // },
     },
 });
 </script>
