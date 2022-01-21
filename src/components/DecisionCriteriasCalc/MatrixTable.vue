@@ -1,7 +1,7 @@
 <template>
-    <table class="matrix">
-        <tbody class="matrix" v-if="rows">
-            <tr v-for="row in rows" :key="row">
+    <div class="matrix">
+        <div class="matrix" v-if="rows">
+            <div v-for="row in rows" :key="row">
                 <input
                     class="cell"
                     @blur="handleInput"
@@ -10,9 +10,9 @@
                     :key="col"
                     type="number"
                 />
-            </tr>
-        </tbody>
-    </table>
+            </div>
+        </div>
+    </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
