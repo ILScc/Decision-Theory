@@ -1,5 +1,5 @@
 <template>
-    <button class="button-main" type="button" @click="calcPCriteria(matrix)">
+    <button class="btn button-main" type="button" @click="calcPCriteria(matrix)">
         calcHurwitz
     </button>
     <div>{{ result }}</div>

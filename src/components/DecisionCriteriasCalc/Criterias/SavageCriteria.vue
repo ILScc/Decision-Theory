@@ -1,5 +1,5 @@
 <template>
-    <button class="button-main" type="button" @click="calcSavage(matrix)">
+    <button class="btn button-main" type="button" @click="calcSavage(matrix)">
         calcSavage
     </button>
     <div>{{ result }}</div>

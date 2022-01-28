@@ -1,5 +1,5 @@
 <template>
-    <button class="button-main" type="button" @click="calcWald(matrix)">
+    <button class="btn button-main" type="button" @click="calcWald(matrix)">
         calcWald
     </button>
     <div>{{ result }}</div>

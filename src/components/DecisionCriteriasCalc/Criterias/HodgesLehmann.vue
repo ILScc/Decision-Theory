@@ -1,6 +1,6 @@
 <template>
     <button
-        class="button-main"
+        class="btn button-main"
         type="button"
         @click="calcHL(matrix, probabilities)"
     >

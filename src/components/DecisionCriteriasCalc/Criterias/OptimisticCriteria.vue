@@ -1,5 +1,5 @@
 <template>
-    <button class="button-main" type="button" @click="calcOptimistic(matrix)">
+    <button class="btn button-main" type="button" @click="calcOptimistic(matrix)">
         calcOptimistic
     </button>
     <div>{{ result }}</div>
