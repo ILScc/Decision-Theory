@@ -2,7 +2,7 @@
     <div class="matrix" v-if="rows">
         <div v-for="row in rows" :key="row">
             <input
-                class="cell"
+                class="matrix__cell"
                 @blur="handleInput"
                 :cell="`${row}${col}`"
                 v-for="col in cols"
@@ -39,13 +39,13 @@ export default defineComponent({
 
             if (cellValue === "") {
                 this.cells.delete(+cellOrder);
-                target.classList.add("cell-invalid");
+                target.classList.add("matrix__cell_invalid");
                 return;
             }
             this.cells.set(+cellOrder, +cellValue);
 
-            if (target.classList.contains("cell-invalid")) {
-                target.classList.remove("cell-invalid");
+            if (target.classList.contains("matrix__cell_invalid")) {
+                target.classList.remove("matrix__cell_invalid");
             }
             this.$emit("setCells", this.cells);
         },
@@ -57,7 +57,7 @@ export default defineComponent({
     max-width: 100vw;
     margin: 5px auto;
 }
-.cell {
+.matrix__cell {
     border: solid 1px;
     border-radius: 4px;
     margin: 2px;
@@ -67,11 +67,11 @@ export default defineComponent({
     font: inherit;
     line-height: normal;
 }
-.cell-invalid {
+.matrix__cell_invalid {
     border: solid 1px red;
 }
 @media (max-width: 500px) {
-    .cell {
+    .matrix__cell {
         width: 1.5rem;
     }
 }

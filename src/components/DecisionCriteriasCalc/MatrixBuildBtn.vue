@@ -46,7 +46,7 @@ export default defineComponent({
   computed: {
     isMatrixBuilded(): string {
       if (this.isBuilded === null) return "";
-      return this.isBuilded ? "button-main--success" : "button-main--fail";
+      return this.isBuilded ? "button-main_success" : "button-main_fail";
     },
   },
 });
@@ -73,10 +73,10 @@ export default defineComponent({
   background: rgb(248, 246, 246);
   transition: background 0.1s ease-in;
 }
-.button-main--success {
+.button-main_success {
   border: 1px solid green;
 }
-.button-main--fail {
+.button-main_fail {
   border: 1px solid red;
 }
 </style>
