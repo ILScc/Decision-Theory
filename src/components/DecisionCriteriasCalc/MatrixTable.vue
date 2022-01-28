@@ -1,16 +1,14 @@
 <template>
-    <div class="matrix">
-        <div class="matrix" v-if="rows">
-            <div v-for="row in rows" :key="row">
-                <input
-                    class="cell"
-                    @blur="handleInput"
-                    :cell="`${row}${col}`"
-                    v-for="col in cols"
-                    :key="col"
-                    type="number"
-                />
-            </div>
+    <div class="matrix" v-if="rows">
+        <div v-for="row in rows" :key="row">
+            <input
+                class="cell"
+                @blur="handleInput"
+                :cell="`${row}${col}`"
+                v-for="col in cols"
+                :key="col"
+                type="number"
+            />
         </div>
     </div>
 </template>
