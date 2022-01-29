@@ -70,7 +70,7 @@ export default defineComponent({
             cells: new Map(),
             probabilities: [],
             isBuilded: null,
-            probsValid: false,
+            probsValid: true,
         } as BuilderData;
     },
 
