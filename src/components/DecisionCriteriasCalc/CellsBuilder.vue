@@ -34,7 +34,7 @@
         /></label>
         <div
             class="cells-bulder__warning"
-            v-if="!isProbsSumEqualOne && !initialValue"
+            v-if="probsSum !== 1 && !initialValue"
         >
             Probabilities sum must be equal 1
         </div>
@@ -53,7 +53,6 @@ export default defineComponent({
         return {
             initialValue: true,
             isProbsLengthValid: false,
-            isProbsSumEqualOne: false,
         };
     },
     props: {
@@ -82,7 +81,7 @@ export default defineComponent({
             const convertedProbabilities = probs.split(",").map((p) => +p);
             const areProbsValid =
                 this.calcProbsLength(convertedProbabilities, this.cols) &&
-                this.calcProbsSum(convertedProbabilities);
+                this.probsSum === 1;
 
             this.$emit("validation", areProbsValid);
             this.$emit("update:probabilities", convertedProbabilities);
@@ -96,11 +95,10 @@ export default defineComponent({
             this.isProbsLengthValid = isEqual;
             return isEqual;
         },
-        calcProbsSum(probs) {
-            const probsSum = probs.reduce((prev, cur) => prev + cur, 0);
-            const isEqualOne = probsSum === 1;
-            this.isProbsSumEqualOne = isEqualOne;
-            return isEqualOne;
+    },
+    computed: {
+        probsSum() {
+            return this.probabilities.reduce((prev, cur) => prev + cur, 0);
         },
     },
 });
