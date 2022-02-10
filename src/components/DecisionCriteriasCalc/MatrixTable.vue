@@ -30,23 +30,22 @@ export default defineComponent({
         setCells: null,
     },
     data() {
-        return { cells: new Map(), invalidCells: []};
+        return { cells: new Map(), invalidCells: [] };
     },
     methods: {
         handleInput({ target }) {
             if (!this.rows) return;
-            const cellOrder = target.attributes.cell.value;
+            const cellOrder = +target.attributes.cell.value;
             const cellValue = target.value;
 
             if (cellValue === "") {
-                this.cells.delete(+cellOrder);
+                this.cells.delete(cellOrder);
                 return;
             }
-            this.cells.set(+cellOrder, +cellValue);
+            this.cells.set(cellOrder, +cellValue);
             this.$emit("setCells", this.cells);
         },
     },
-    computed: {},
 });
 </script>
 <style scoped>
