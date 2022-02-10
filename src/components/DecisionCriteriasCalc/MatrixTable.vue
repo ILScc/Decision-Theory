@@ -7,6 +7,7 @@
                 :cell="`${row}${col}`"
                 v-for="col in cols"
                 :key="col"
+                :class="{ 'matrix__cell_invalid': !cells.get(+`${row}${col}`) }"
                 type="number"
             />
         </div>
@@ -29,7 +30,7 @@ export default defineComponent({
         setCells: null,
     },
     data() {
-        return { cells: new Map() };
+        return { cells: new Map(), invalidCells: []};
     },
     methods: {
         handleInput({ target }) {
@@ -39,17 +40,13 @@ export default defineComponent({
 
             if (cellValue === "") {
                 this.cells.delete(+cellOrder);
-                target.classList.add("matrix__cell_invalid");
                 return;
             }
             this.cells.set(+cellOrder, +cellValue);
-
-            if (target.classList.contains("matrix__cell_invalid")) {
-                target.classList.remove("matrix__cell_invalid");
-            }
             this.$emit("setCells", this.cells);
         },
     },
+    computed: {},
 });
 </script>
 <style scoped>
