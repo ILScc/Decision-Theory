@@ -40,7 +40,7 @@
         </div>
         <div
             class="cells-bulder__warning"
-            v-if="!isProbsLengthValid && !initialValue"
+            v-if="!isProbsLenValid && !initialValue"
         >
             Number of inserted probabilities must be equal cols
         </div>
@@ -52,7 +52,6 @@ export default defineComponent({
     data() {
         return {
             initialValue: true,
-            isProbsLengthValid: false,
         };
     },
     props: {
@@ -79,9 +78,7 @@ export default defineComponent({
         },
         updateProbs(probs) {
             const convertedProbabilities = probs.split(",").map((p) => +p);
-            const areProbsValid =
-                this.calcProbsLength(convertedProbabilities, this.cols) &&
-                this.probsSum === 1;
+            const areProbsValid = this.isProbsLenValid && this.probsSum === 1;
 
             this.$emit("validation", areProbsValid);
             this.$emit("update:probabilities", convertedProbabilities);
@@ -90,13 +87,11 @@ export default defineComponent({
             const target = e.target as HTMLInputElement;
             target.value = !+target.value ? "" : target.value;
         },
-        calcProbsLength(probs, cols) {
-            const isEqual = probs.length === cols;
-            this.isProbsLengthValid = isEqual;
-            return isEqual;
-        },
     },
     computed: {
+        isProbsLenValid() {
+            return this.probabilities.length === this.cols;
+        },
         probsSum() {
             return this.probabilities.reduce((prev, cur) => prev + cur, 0);
         },
