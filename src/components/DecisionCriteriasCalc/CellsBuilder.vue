@@ -1,37 +1,37 @@
 <template>
     <form class="cells-builder">
-        <input
-            class="cells-builder__settings"
-            type="number"
-            name="rows"
-            :value="rows"
-            @input="$emit('update:rows', +getInputValue($event))"
-            @focus="resetValue($event)"
-        />
         <label class="cells-builder__text" for="rows"
-            >Insert number of rows (decisions)</label
-        >
-        <input
-            class="cells-builder__settings"
-            type="number"
-            name="columns"
-            :value="cols"
-            @input="$emit('update:cols', +getInputValue($event))"
-            @focus="resetValue($event)"
-        />
+            ><span>Insert number of rows (decisions)</span>
+            <input
+                class="cells-builder__settings"
+                type="number"
+                name="rows"
+                :value="rows"
+                @input="$emit('update:rows', +getInputValue($event))"
+                @focus="resetValue($event)"
+            />
+        </label>
+
         <label class="cells-builder__text" for="columns"
-            >Insert number of columns (conditions)</label
-        >
-        <input
-            class="cells-builder__settings"
-            type="text"
-            name="probabilities"
-            :value="probabilities"
-            @blur="handleProbsInput($event)"
-        />
+            ><span>Insert number of columns (conditions)</span
+            ><input
+                class="cells-builder__settings"
+                type="number"
+                name="columns"
+                :value="cols"
+                @input="$emit('update:cols', +getInputValue($event))"
+                @focus="resetValue($event)"
+        /></label>
+
         <label class="cells-builder__text" for="probabilities"
-            >Insert probabilities</label
-        >
+            ><span>Insert probabilities</span>
+            <input
+                class="cells-builder__settings"
+                type="text"
+                name="probabilities"
+                :value="probabilities"
+                @blur="handleProbsInput($event)"
+        /></label>
         <div
             class="cells-bulder__warning"
             v-if="!isProbsSumEqualOne && !initialValue"
@@ -82,9 +82,8 @@ export default defineComponent({
             const convertedProbabilities = probs.split(",").map((p) => +p);
             const areProbsValid =
                 this.calcProbsLength(convertedProbabilities, this.cols) &&
-                this.calcProbsSum(convertedProbabilities)
-                    ? true
-                    : false;
+                this.calcProbsSum(convertedProbabilities);
+
             this.$emit("validation", areProbsValid);
             this.$emit("update:probabilities", convertedProbabilities);
         },
@@ -118,10 +117,6 @@ export default defineComponent({
     margin: 0 auto;
     border: solid 1px #ccc;
     border-radius: 10px;
-}
-
-.cells-builder__text {
-    margin: 0 auto;
 }
 .cells-builder input {
     margin-top: 5px;
