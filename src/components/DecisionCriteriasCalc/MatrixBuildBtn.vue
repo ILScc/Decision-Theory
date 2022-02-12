@@ -36,8 +36,8 @@ export default defineComponent({
 
             this.$emit("buildMatrix", matrix);
         },
-        buildMatrixRows<T>(cells: T[]) {
-            const matrix: T[][] = [];
+        buildMatrixRows(cells: number[]) {
+            const matrix: number[][] = [];
             if (this.cols) {
                 for (let i = 0; i < cells.length; i += this.cols) {
                     matrix.push(cells.slice(i, i + this.cols));

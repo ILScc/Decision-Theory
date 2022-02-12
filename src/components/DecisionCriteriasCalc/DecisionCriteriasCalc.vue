@@ -75,7 +75,7 @@ export default defineComponent({
     },
 
     methods: {
-        handleBuild(matrix) {
+        handleBuild(matrix: number[][]) {
             if (!this.cols || !this.rows || !this.probsValid) {
                 this.isBuilded = false;
                 return;
@@ -87,10 +87,10 @@ export default defineComponent({
             this.isBuilded = true;
             this.matrix = matrix;
         },
-        setCells(cells) {
+        setCells(cells: Map<number, number>) {
             this.cells = cells;
         },
-        setIsValid(v) {
+        setIsValid(v: boolean) {
             this.probsValid = v;
         },
     },

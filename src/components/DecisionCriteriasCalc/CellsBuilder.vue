@@ -61,15 +61,15 @@ export default defineComponent({
         "update:rows": null,
         "update:cols": null,
         "update:probabilities": null,
-        validation: null,
+        "validation": null,
     },
     methods: {
         getInputValue(e: Event) {
             const target = e.target as HTMLInputElement;
             return target.value;
         },
-        handleProbsInput(value) {
-            const probabilities = this.getInputValue(value);
+        handleProbsInput(e : Event) {
+            const probabilities = this.getInputValue(e);
             if (!probabilities) this.initialValue = true;
             this.initialValue = false;
             this.updateProbs(probabilities);
