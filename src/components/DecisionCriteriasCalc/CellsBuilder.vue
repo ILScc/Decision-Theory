@@ -8,7 +8,6 @@
                 name="rows"
                 :value="rows"
                 @input="$emit('update:rows', +getInputValue($event))"
-                @focus="resetValue($event)"
             />
         </label>
 
@@ -20,7 +19,6 @@
                 name="columns"
                 :value="cols"
                 @input="$emit('update:cols', +getInputValue($event))"
-                @focus="resetValue($event)"
         /></label>
 
         <label class="cells-builder__text" for="probabilities"
@@ -82,10 +80,6 @@ export default defineComponent({
 
             this.$emit("validation", areProbsValid);
             this.$emit("update:probabilities", convertedProbabilities);
-        },
-        resetValue(e: Event) {
-            const target = e.target as HTMLInputElement;
-            target.value = !+target.value ? "" : target.value;
         },
     },
     computed: {
