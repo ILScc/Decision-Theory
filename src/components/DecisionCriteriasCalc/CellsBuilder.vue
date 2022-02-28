@@ -1,6 +1,6 @@
 <template>
     <form class="cells-builder">
-        <label class="cells-builder__text" for="rows"
+        <label class="cells-builder__text"
             ><span>Insert number of rows (decisions)</span>
             <input
                 class="cells-builder__settings"
@@ -11,7 +11,7 @@
             />
         </label>
 
-        <label class="cells-builder__text" for="columns"
+        <label class="cells-builder__text"
             ><span>Insert number of columns (conditions)</span
             ><input
                 class="cells-builder__settings"
@@ -21,16 +21,18 @@
                 @input="$emit('update:cols', +getInputValue($event))"
         /></label>
 
-        <label class="cells-builder__text" for="probabilities"
+        <label class="cells-builder__text"
             ><span>Insert probabilities</span>
             <input
+                v-for="(col, idx) in cols"
+                :key="col"
                 class="cells-builder__settings"
                 type="text"
                 name="probabilities"
-                :value="probabilities"
-                @blur="handleProbsInput($event)"
+                :value="probabilities[idx]"
+                @blur="handleProbsInput(idx, $event)"
         /></label>
-        <div
+        <!-- <div
             class="cells-bulder__warning"
             v-if="probsSum !== 1 && !initialValue"
         >
@@ -41,7 +43,7 @@
             v-if="!isProbsLenValid && !initialValue"
         >
             Number of inserted probabilities must be equal cols
-        </div>
+        </div> -->
     </form>
 </template>
 <script lang="ts">
@@ -61,26 +63,30 @@ export default defineComponent({
         "update:rows": null,
         "update:cols": null,
         "update:probabilities": null,
-        "validation": null,
+        validation: null,
     },
     methods: {
         getInputValue(e: Event) {
             const target = e.target as HTMLInputElement;
             return target.value;
         },
-        handleProbsInput(e : Event) {
-            const probabilities = this.getInputValue(e);
-            if (!probabilities) this.initialValue = true;
-            this.initialValue = false;
-            this.updateProbs(probabilities);
+        handleProbsInput(idx, e: Event) {
+            const probability = +this.getInputValue(e);
+            // if (!probabilities) this.initialValue = true;
+            // this.initialValue = false;
+            // this.updateProbs(probabilities);
+            const newProbs = this.probabilities.slice();
+            newProbs[idx] = probability;
+            console.log(newProbs);
+            this.$emit("update:probabilities", newProbs);
         },
-        updateProbs(probs) {
-            const convertedProbabilities = probs.split(",").map((p) => +p);
-            const areProbsValid = this.isProbsLenValid && this.probsSum === 1;
+        // updateProbs(probs) {
+        //     const convertedProbabilities = probs.split(",").map((p) => +p);
+        //     const areProbsValid = this.isProbsLenValid && this.probsSum === 1;
 
-            this.$emit("validation", areProbsValid);
-            this.$emit("update:probabilities", convertedProbabilities);
-        },
+        //     this.$emit("validation", areProbsValid);
+        //     this.$emit("update:probabilities", convertedProbabilities);
+        // },
     },
     computed: {
         isProbsLenValid() {
