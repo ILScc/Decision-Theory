@@ -5,5 +5,4 @@ export type BuilderData = {
     cells: Map<number, number>;
     probabilities: number[];
     isBuilded: boolean | null;
-    probsValid: boolean;
 };

@@ -37,12 +37,6 @@
             v-if="probsSum !== 1 && !initialValue"
         >
             Probabilities sum must be equal 1
-        </div>
-        <div
-            class="cells-bulder__warning"
-            v-if="!isProbsLenValid && !initialValue"
-        >
-            Number of inserted probabilities must be equal cols
         </div> -->
     </form>
 </template>
@@ -63,7 +57,6 @@ export default defineComponent({
         "update:rows": null,
         "update:cols": null,
         "update:probabilities": null,
-        validation: null,
     },
     methods: {
         getInputValue(e: Event) {
@@ -72,28 +65,10 @@ export default defineComponent({
         },
         handleProbsInput(idx, e: Event) {
             const probability = +this.getInputValue(e);
-            // if (!probabilities) this.initialValue = true;
-            // this.initialValue = false;
-            // this.updateProbs(probabilities);
+
             const newProbs = this.probabilities.slice();
             newProbs[idx] = probability;
-            console.log(newProbs);
             this.$emit("update:probabilities", newProbs);
-        },
-        // updateProbs(probs) {
-        //     const convertedProbabilities = probs.split(",").map((p) => +p);
-        //     const areProbsValid = this.isProbsLenValid && this.probsSum === 1;
-
-        //     this.$emit("validation", areProbsValid);
-        //     this.$emit("update:probabilities", convertedProbabilities);
-        // },
-    },
-    computed: {
-        isProbsLenValid() {
-            return this.probabilities.length === this.cols;
-        },
-        probsSum() {
-            return this.probabilities.reduce((prev, cur) => prev + cur, 0);
         },
     },
 });

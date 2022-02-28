@@ -5,7 +5,6 @@
                 v-model:rows="rows"
                 v-model:cols="cols"
                 v-model:probabilities="probabilities"
-                @validation="setIsValid"
             />
             <matrix-table :rows="rows" :cols="cols" @setCells="setCells" />
             <matrix-build-btn
@@ -70,13 +69,12 @@ export default defineComponent({
             cells: new Map(),
             probabilities: [],
             isBuilded: null,
-            probsValid: true,
         } as BuilderData;
     },
 
     methods: {
         handleBuild(matrix: number[][]) {
-            if (!this.cols || !this.rows || !this.probsValid) {
+            if (!this.cols || !this.rows || !this.areProbsValid) {
                 this.isBuilded = false;
                 return;
             }
@@ -90,8 +88,12 @@ export default defineComponent({
         setCells(cells: Map<number, number>) {
             this.cells = cells;
         },
-        setIsValid(v: boolean) {
-            this.probsValid = v;
+    },
+    computed: {
+        areProbsValid(): boolean {
+            return (
+                this.probabilities.reduce((prev, cur) => prev + cur, 0) === 1
+            );
         },
     },
 });
